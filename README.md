@@ -9,11 +9,22 @@ I am a developer focused on creating robust backend systems, exploring network p
 ### 🛠️ Tech Stack & Tools
 
 <p align="left">
+  <img src="https://img.shields.io/badge/Linux_Networking-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux Networking" />
+  <img src="https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" alt="C++" />
+  <img src="https://img.shields.io/badge/C-A8B9CC?style=for-the-badge&logo=c&logoColor=black" alt="C" />
   <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
-  <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" alt="Dart" />
+  <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java" />
+  <img src="https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white" alt="Go" />
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />
   <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/Linux_Networking-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux" />
+  <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" alt="Dart" />
+  <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter" />
   <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white" alt="Django" />
+  <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
+  <img src="https://img.shields.io/badge/Bash-4EAA25?style=for-the-badge&logo=gnu-bash&logoColor=white" alt="Bash" />
+  <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git" />
+  <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
 </p>
 
 ---
@@ -30,11 +41,15 @@ I am a developer focused on creating robust backend systems, exploring network p
 ### 📊 GitHub Stats
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Anbu-00001&show_icons=true&theme=radium&hide_border=true" alt="Anbu's GitHub stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Anbu-00001&layout=compact&theme=radium&hide_border=true" alt="Top Languages" />
+  <a href="https://github.com/Anbu-00001">
+    <img src="https://github-readme-stats.vercel.app/api?username=Anbu-00001&show_icons=true&theme=radium&hide_border=true&v=1" alt="Anbu's GitHub stats" />
+  </a>
+  <a href="https://github.com/Anbu-00001">
+    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Anbu-00001&layout=compact&theme=radium&hide_border=true&v=1" alt="Top Languages" />
+  </a>
 </p>
 
 ---
 <p align="center">
-  <i>Let's connect! Find me on <a href="https://www.linkedin.com/in/anbuchelvan-ganesan-549b13326?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">LinkedIn</a> or reach out via email at anbuchelvannew@gmail.com.</i>
+  <i>Let's connect! Find me on <a href="YOUR_LINKEDIN_URL_HERE">LinkedIn</a> or reach out via email at anbuchelvannew@gmail.com.</i>
 </p>
