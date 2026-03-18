@@ -20,11 +20,16 @@ I am a developer focused on creating robust backend systems, exploring network p
   <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" alt="Dart" />
   <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter" />
   <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white" alt="Django" />
+  <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" />
+  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit" />
   <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
   <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
+  <img src="https://img.shields.io/badge/Cloud-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white" alt="Cloud" />
   <img src="https://img.shields.io/badge/Bash-4EAA25?style=for-the-badge&logo=gnu-bash&logoColor=white" alt="Bash" />
   <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git" />
   <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
+  <img src="https://img.shields.io/badge/import_antigravity-8A2BE2?style=for-the-badge&logo=python&logoColor=white" alt="Antigravity" />
 </p>
 
 ---
@@ -42,10 +47,15 @@ I am a developer focused on creating robust backend systems, exploring network p
 
 <p align="center">
   <a href="https://github.com/Anbu-00001">
-    <img src="https://github-readme-stats.vercel.app/api?username=Anbu-00001&show_icons=true&theme=radium&hide_border=true&v=1" alt="Anbu's GitHub stats" />
+    <img src="https://github-readme-stats.vercel.app/api?username=Anbu-00001&show_icons=true&theme=radium&hide_border=true&v=3" alt="Anbu's GitHub stats" />
   </a>
   <a href="https://github.com/Anbu-00001">
-    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Anbu-00001&layout=compact&theme=radium&hide_border=true&v=1" alt="Top Languages" />
+    <img src="https://github-readme-streak-stats.herokuapp.com/?user=Anbu-00001&theme=radium&hide_border=true" alt="GitHub Streak" />
+  </a>
+</p>
+<p align="center">
+  <a href="https://github.com/Anbu-00001">
+    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Anbu-00001&layout=compact&theme=radium&hide_border=true&v=3" alt="Top Languages" />
   </a>
 </p>
 
