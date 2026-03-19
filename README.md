@@ -43,20 +43,24 @@ I am a developer focused on creating robust backend systems, exploring network p
 
 ---
 
-### 📊 GitHub Stats
+### 🏆 GitHub Achievements
 
 <p align="center">
   <a href="https://github.com/Anbu-00001">
-    <img src="https://github-readme-stats.vercel.app/api?username=Anbu-00001&show_icons=true&theme=radium&hide_border=true&v=3" alt="Anbu's GitHub stats" />
-  </a>
-  <a href="https://github.com/Anbu-00001">
-    <img src="https://github-readme-streak-stats.herokuapp.com/?user=Anbu-00001&theme=radium&hide_border=true" alt="GitHub Streak" />
+      <img src="https://github-profile-trophy.vercel.app/?username=Anbu-00001&theme=tokyonight&no-frame=true&no-bg=true&margin-w=15#.svg" alt="Anbu's Trophies" />
   </a>
 </p>
+
+---
+
+### 📊 GitHub Stats
+
 <p align="center">
-  <a href="https://github.com/Anbu-00001">
-    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Anbu-00001&layout=compact&theme=radium&hide_border=true&v=3" alt="Top Languages" />
-  </a>
+  <img src="https://github-readme-stats.vercel.app/api?username=Anbu-00001&show_icons=true&theme=tokyonight&hide_border=true&cache_seconds=86400#.svg" alt="Anbu's GitHub stats" />
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=Anbu-00001&theme=tokyonight&hide_border=true#.svg" alt="GitHub Streak" />
+</p>
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Anbu-00001&layout=compact&theme=tokyonight&hide_border=true&cache_seconds=86400#.svg" alt="Top Languages" />
 </p>
 
 ---
