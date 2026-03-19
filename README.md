@@ -63,9 +63,7 @@ I am a developer focused on creating robust backend systems, exploring network p
 
 ### 🗓️ 3D Contribution Map
 
-<p align="center">
-  <img src="./profile-3d-contrib/profile-night-rainbow.svg" alt="3D Contribution Map" />
-</p>
+![3D Contribution Map](./profile-3d-contrib/profile-night-rainbow.svg)
 
 ---
 <p align="center">
