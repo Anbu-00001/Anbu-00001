@@ -61,12 +61,6 @@ I am a developer focused on creating robust backend systems, exploring network p
 
 ---
 
-### 🗓️ 3D Contribution Map
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Anbu-00001/Anbu-00001/main/profile-3d-contrib/profile-night-view.svg" alt="3D Contribution Map" />
-</p>
-
 ---
 <p align="center">
   <i>Let's connect! Find me on <a href="YOUR_LINKEDIN_URL_HERE">LinkedIn</a> or reach out via email at anbuchelvannew@gmail.com.</i>
