@@ -36,7 +36,7 @@ I am a developer focused on creating robust backend systems, exploring network p
 
 ### 🚀 What I'm Working On
 
-* 🚑 **OpenRescue:** An offline-first emergency coordination system using decentralized P2P mesh networking and on-device ML triage.
+* 🚑 **OpenRescue:** An offline-first emergency coordination system using decentralized P2P mesh networking with OSRM routing and FastAPI backend
 * 🛡️ **Sentinel-AIOps:** A production-grade AIOps framework focused on autonomous reliability and model integrity.
 * 🌐 **dc-transport-lab:** Benchmarking transport performance using Linux network namespaces and eBPF instrumentation.
 * 🕵️ **deep-trust:** Multimodal deepfake detection with explainable AI and calibrated trust scoring.
