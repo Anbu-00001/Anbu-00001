@@ -50,7 +50,7 @@ I am a developer focused on creating robust backend systems, exploring network p
     <img src="https://github-readme-stats-eight-theta.vercel.app/api?username=Anbu-00001&show_icons=true&theme=tokyonight&hide_border=true&cache_seconds=86400#.svg" alt="Anbu's GitHub stats" />
   </a>
   <a href="https://github.com/Anbu-00001">
-    <img src="https://github-readme-streak-stats.herokuapp.com/?user=Anbu-00001&theme=tokyonight&hide_border=true#.svg" alt="GitHub Streak" />
+    <img src="https://github-readme-streak-stats.herokuapp.com/?user=Anbu-00001&theme=tokyonight&hide_border=true#.svg" alt="GitHub Streak&cache_seconds=1" />
   </a>
 </p>
 <p align="center">
