@@ -35,10 +35,10 @@ I am a developer focused on creating robust backend systems, exploring network p
 
 ### What I'm Working On
 
-**OpenRescue:** Offline-first emergency coordination system using P2P mesh networking.
-**Sentinel-AIOps:** Production-grade AIOps framework.
-**dc-transport-lab:** Benchmarking transport performance with eBPF.
-**Deep-trust:** Multimodal deepfake detection with explainable AI.
+&nbsp;&nbsp;&nbsp;&nbsp; **OpenRescue:** Offline-first emergency coordination system using P2P mesh networking. <br>
+&nbsp;&nbsp;&nbsp;&nbsp; **Sentinel-AIOps:** Production-grade AIOps framework. <br>
+&nbsp;&nbsp;&nbsp;&nbsp; **dc-transport-lab:** Benchmarking transport performance with eBPF. <br>
+&nbsp;&nbsp;&nbsp;&nbsp; **Deep-trust:** Multimodal deepfake detection with explainable AI. <br>
 
 ---
 
