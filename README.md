@@ -60,9 +60,7 @@ I am a developer focused on creating robust backend systems, exploring network p
 
 <br>
 <div align="center">
-  <video src="https://github.com/user-attachments/assets/3e430432-e854-4493-b562-912f10ad4b5c" autoplay loop muted playsinline width="80%">
-    Your browser does not support the video tag.
-  </video>
+  <img src="https://github.com/user-attachments/assets/5b660b8e-bb59-4848-a291-61a8f87c81c8" width="80%" alt="Animated ASCII Bonfire">
 </div>
 <br>
 
