@@ -6,7 +6,7 @@ I am a developer focused on creating robust backend systems, exploring network p
 
 ---
 
-### 🛠️ Tech Stack & Tools
+### Tech Stack & Tools
 
 <p align="left">
   <img src="https://img.shields.io/badge/Linux_Networking-000000?style=for-the-badge&logo=linux&logoColor=white&cache_seconds=1" alt="Linux Networking" />
@@ -33,16 +33,16 @@ I am a developer focused on creating robust backend systems, exploring network p
 
 ---
 
-### 🚀 What I'm Working On
+### What I'm Working On
 
-* 🚑 **OpenRescue:** Offline-first emergency coordination system using P2P mesh networking.
-* 🛡️ **Sentinel-AIOps:** Production-grade AIOps framework.
-* 🌐 **dc-transport-lab:** Benchmarking transport performance with eBPF.
-* 🕵️ **deep-trust:** Multimodal deepfake detection with explainable AI.
+**OpenRescue:** Offline-first emergency coordination system using P2P mesh networking.
+**Sentinel-AIOps:** Production-grade AIOps framework.
+**dc-transport-lab:** Benchmarking transport performance with eBPF.
+**Deep-trust:** Multimodal deepfake detection with explainable AI.
 
 ---
 
-### 📊 GitHub Stats
+### GitHub Stats
 
 <p align="center">
   <a href="https://github.com/Anbu-00001">
