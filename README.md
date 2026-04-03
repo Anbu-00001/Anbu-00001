@@ -46,7 +46,7 @@ I am a developer focused on creating robust backend systems, exploring network p
 
 <p align="center">
   <a href="https://github.com/Anbu-00001">
-    <img src="https://github-readme-stats.vercel.app/api?username=Anbu-00001&show_icons=true&theme=tokyonight&cache_seconds=1" alt="Anbu's GitHub stats" />
+    <img src="https://github-readme-stats-eight-theta.vercel.app/api?username=Anbu-00001&show_icons=true&theme=tokyonight&cache_seconds=1" alt="Anbu's GitHub stats" />
   </a>
   <a href="https://github.com/Anbu-00001">
     <img src="https://github-readme-streak-stats.herokuapp.com/?user=Anbu-00001&theme=tokyonight&cache_seconds=1" alt="GitHub Streak" />
@@ -54,7 +54,7 @@ I am a developer focused on creating robust backend systems, exploring network p
 </p>
 <p align="center">
   <a href="https://github.com/Anbu-00001">
-    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Anbu-00001&layout=compact&theme=tokyonight&cache_seconds=1" alt="Top Languages" />
+    <img src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=Anbu-00001&layout=compact&theme=tokyonight&cache_seconds=1" alt="Top Languages" />
   </a>
 </p>
 
