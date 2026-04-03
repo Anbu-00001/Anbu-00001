@@ -60,7 +60,7 @@ I am a developer focused on creating robust backend systems, exploring network p
 
 <br>
 <div align="center">
-  ![final_bonfire](https://github.com/user-attachments/assets/5fba1f52-0f6f-424d-9dac-aae2a79329a1)
+  <img src="https://github.com/user-attachments/assets/5fba1f52-0f6f-424d-9dac-aae2a79329a1" alt="final_bonfire">
 </div>
 <br>
 
