@@ -58,8 +58,16 @@ I am a developer focused on creating robust backend systems, exploring network p
   </a>
 </p>
 
+<br>
+<div align="center">
+  <video src="https://github.com/user-attachments/assets/3e430432-e854-4493-b562-912f10ad4b5c" autoplay loop muted playsinline width="80%">
+    Your browser does not support the video tag.
+  </video>
+</div>
+<br>
+
 ---
 
 <p align="center">
-  <i>Let's connect! Find me on <a href="YOUR_LINKEDIN_URL_HERE">LinkedIn</a> or reach out via email at anbuchelvannew@gmail.com.</i>
+  <i>Let's connect! Find me on <a href="https://www.linkedin.com/in/anbuchelvan-ganesan-549b13326?utm_source=share_via&utm_content=profile&utm_medium=member_android">LinkedIn</a> or reach out via email at anbuchelvannew@gmail.com.</i>
 </p>
