@@ -62,7 +62,7 @@ I am a developer focused on creating robust backend systems, exploring network p
 <div align="center">
   <img src="https://github.com/user-attachments/assets/248873b1-bed5-47f3-81e8-dc201334b99e" alt="spiral_engulfment">
 </div>
-<br>!
+<br>
 
 
 
