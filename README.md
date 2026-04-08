@@ -69,5 +69,5 @@ I am a developer focused on creating robust backend systems, exploring network p
 ---
 
 <p align="center">
-  <i>Let's connect! Find me on <a href="https://www.linkedin.com/in/anbuchelvan-ganesan-549b13326?utm_source=share_via&utm_content=profile&utm_medium=member_android">LinkedIn</a> or reach out via email at anbuchelvannew@gmail.com.</i>
+  <i>Let's connect! Find me on <a href="https://www.linkedin.com/in/anbuchelvan-ganesan-549b13326?utm_source=share_via&utm_content=profile&utm_medium=member_android">LinkedIn</a> or reach out via Gmail at anbuchelvannew@gmail.com.</i>
 </p>
