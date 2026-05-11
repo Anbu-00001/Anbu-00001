@@ -29,6 +29,8 @@ I am a developer focused on creating robust backend systems, exploring network p
   <img src="https://img.shields.io/badge/Bash-000000?style=for-the-badge&logo=gnu-bash&logoColor=white&cache_seconds=1" alt="Bash" />
   <img src="https://img.shields.io/badge/Git-000000?style=for-the-badge&logo=git&logoColor=white&cache_seconds=1" alt="Git" />
   <img src="https://img.shields.io/badge/GitHub-000000?style=for-the-badge&logo=github&logoColor=white&cache_seconds=1" alt="GitHub" />
+  <img src="https://img.shields.io/badge/n8n-000000?style=for-the-badge&logo=n8n&logoColor=white&cache_seconds=1" alt="n8n" />
+  <img src="https://img.shields.io/badge/Hugging%20Face-000000?style=for-the-badge&logo=huggingface&logoColor=white&cache_seconds=1" alt="Hugging Face" />
 </p>
 
 ---
