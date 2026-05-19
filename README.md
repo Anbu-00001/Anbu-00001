@@ -40,7 +40,7 @@ I am a developer focused on creating robust backend systems, exploring network p
 
 &nbsp;&nbsp;&nbsp;&nbsp; **OpenRescue:** Offline-first emergency coordination system using P2P mesh networking. <br>
 &nbsp;&nbsp;&nbsp;&nbsp; **Sentinel-AIOps:** Production-grade AIOps framework. <br>
-&nbsp;&nbsp;&nbsp;&nbsp; **dc-transport-lab:** Benchmarking transport performance with eBPF. <br>
+&nbsp;&nbsp;&nbsp;&nbsp; **CivicMesh:** Multi-agent AI navigator that routes people in crisis to housing, food, healthcare and legal aid. <br>
 &nbsp;&nbsp;&nbsp;&nbsp; **Deep-trust:** Multimodal deepfake detection with explainable AI. <br>
 
 ---
