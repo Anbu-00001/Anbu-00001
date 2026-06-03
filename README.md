@@ -33,6 +33,7 @@ I am a developer focused on creating robust backend systems, exploring network p
   <img src="https://img.shields.io/badge/Hugging%20Face-000000?style=for-the-badge&logo=huggingface&logoColor=white&cache_seconds=1" alt="Hugging Face" />
   <img src="https://img.shields.io/badge/Jac-000000?style=for-the-badge&logoColor=white&cache_seconds=1" alt="Jac" />
   <img src="https://img.shields.io/badge/Kotlin-000000?style=for-the-badge&logo=kotlin&logoColor=white&cache_seconds=1" alt="Kotlin" />
+  <img src="https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white&cache_seconds=1" alt="Rust" />
 </p>
 
 ---
@@ -53,7 +54,7 @@ I am a developer focused on creating robust backend systems, exploring network p
     <img src="https://github-readme-stats-eight-theta.vercel.app/api?username=Anbu-00001&show_icons=true&theme=tokyonight&cache_seconds=1" alt="Anbu's GitHub stats" />
   </a>
   <a href="https://github.com/Anbu-00001">
-    <img src="https://github-readme-streak-stats.herokuapp.com/?user=Anbu-00001&theme=tokyonight&cache_seconds=1" alt="GitHub Streak" />
+    <img src="https://streak-stats.demolab.com/?user=Anbu-00001&theme=tokyonight&cache_seconds=1" alt="GitHub Streak" />
   </a>
 </p>
 <p align="center">
