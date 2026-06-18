@@ -28,8 +28,8 @@ jobs:
 
       - name: Commit and Push Changes
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "Anbu-00001"
+          git config --global user.email "anbuchelvanganesan.cse2024@citchennai.net"
           git add profile/streak.svg
           if git diff --staged --quiet; then
             echo "No changes in streak stats."
