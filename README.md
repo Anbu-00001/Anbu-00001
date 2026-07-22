@@ -2,7 +2,7 @@
 
 Building resilient networks, autonomous AIOps systems, and offline-first technology.
 
-I am a developer focused on creating robust backend systems, exploring network performance (eBPF, Linux namespaces), and building applied AI solutions. Welcome to my GitHub!.
+I am a developer focused on creating robust backend systems, exploring network performance, Agentic AI, and building applied AI solutions. Welcome to my GitHub!
 
 ---
 
