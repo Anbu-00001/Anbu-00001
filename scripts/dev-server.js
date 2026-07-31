@@ -34,8 +34,10 @@ function listen(server, port = 0) {
 }
 
 async function selftest() {
-  // Stand-in for Upstash/Vercel KV.
-  let stored = 0;
+  // Stand-in for Upstash/Vercel KV. Seeded above the live Komarev value so the
+  // displayed max(kv, komarev) actually advances during the test instead of
+  // sitting pinned to the Komarev floor.
+  let stored = 1000;
   const kv = http.createServer((req, res) => {
     if (req.url.startsWith('/incr/')) {
       stored += 1;
@@ -70,14 +72,25 @@ async function selftest() {
 
   const svgRes = await fetch(`${base}/api/counter`);
   const svg = await svgRes.text();
-  const shown = svg.match(/class="pixel-count-small"[^>]*>([\d,]+)</);
   const frames = (svg.match(/<image /g) || []).length;
+
+  // The count is drawn as bitmap <rect>s inside .inscription, not as a <text>
+  // node, so verify the group exists and is populated rather than scraping a
+  // string out of it.
+  const group = svg.match(/<g class="inscription">([\s\S]*?)<\/g>/);
+  const inkRects = group ? (group[1].match(/<rect /g) || []).length : 0;
+  const shown = inkRects > 0;
+
+  // Every rect must land inside the flat zone (x 83..173, y 50..78).
+  const coords = group ? [...group[1].matchAll(/x="([\d.]+)" y="([\d.]+)" width="([\d.]+)" height="(\d+)"/g)] : [];
+  const outside = coords.filter(([, x, y, w, h]) =>
+    +x < 83 || +x + +w > 173 || +y < 50 || +y + +h > 78).length;
 
   console.log(
     `\ncontent-type : ${svgRes.headers.get('content-type')}` +
     `\ncache-control: ${svgRes.headers.get('cache-control')}` +
     `\nsize         : ${(svg.length / 1024).toFixed(1)} KB, ${frames} animation frames` +
-    `\nHUD reads    : "${shown ? shown[1] : 'NOT FOUND'}"`
+    `\ninscription  : ${inkRects} rects, ${outside} outside the 90x28 flat zone`
   );
 
   // The per-view proof is that KV advances on every single request. The
@@ -87,15 +100,17 @@ async function selftest() {
   const shownMonotonic = seen.every((v, i) => i === 0 || v >= seen[i - 1]);
   const shownAdvanced = seen[seen.length - 1] > seen[0];
   const noStore = /no-store/.test(svgRes.headers.get('cache-control') || '');
-  const ok = kvRising && shownMonotonic && shownAdvanced && frames === 10 && shown && noStore;
+  const ok = kvRising && shownMonotonic && shownAdvanced && frames === 10 &&
+    shown && outside === 0 && noStore;
 
   console.log(
     ok
       ? `\nPASS: KV advanced ${kvSeen.join(' -> ')} (one per request); displayed ` +
-        `${seen.join(' -> ')} rising off the Komarev floor; 10 frames intact; no-store set.`
+        `${seen.join(' -> ')}; 10 frames intact; ${inkRects} inscription rects all ` +
+        `inside the flat zone; no-store set.`
       : `\nFAIL: kvRising=${kvRising} (${kvSeen.join(', ')}) shown=${seen.join(', ')} ` +
         `monotonic=${shownMonotonic} advanced=${shownAdvanced} frames=${frames} ` +
-        `hud=${!!shown} noStore=${noStore}`
+        `inscription=${inkRects} outsideZone=${outside} noStore=${noStore}`
   );
 
   server.close();

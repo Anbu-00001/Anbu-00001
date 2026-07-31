@@ -1,45 +1,57 @@
 """
-Crimson Moon Reveal - 160x80 pixel art, 8 frame cloud-parting sequence.
+Crimson Moon Reveal - 256x128 banner sprite, 10 frame centre-parting sequence.
 
-Every frame is built from ONE set of cloud puffs. Only the displacement of the
-two front banks, the moon radius and the crimson light field change per frame,
-so cloud shapes never jitter between frames.
+One cloud mass splits horizontally across the middle: the top bank draws upward,
+the bottom bank downward, uncovering the disc from its midline outward. Every
+frame is built from ONE set of puffs, so cloud shapes never jitter between
+frames - only the displacement, the moon radius and the crimson light change.
+
+Frame 10 is the resting frame and is held indefinitely, so the inscription zone
+is stamped flat as the very last operation before quantisation: nothing in the
+render pipeline can dirty it.
 """
 import numpy as np, random, math, json, base64, io
 from PIL import Image
 from scipy import ndimage
 
-W, H = 160, 80
-MOON_CX, MOON_CY = 80.0, 43.0
+W, H = 256, 128
+MOON_CX, MOON_CY = 128.0, 64.0
+SEAM_Y = 64.0
+
+# ---- inscription zone: flat rectangle, both caption and number live here ----
+BAND_W, BAND_H = 90, 28
+BX0, BX1 = int(MOON_CX - BAND_W // 2), int(MOON_CX + BAND_W // 2)
+BY0, BY1 = int(MOON_CY - BAND_H // 2), int(MOON_CY + BAND_H // 2)
 
 # ---------------------------------------------------------------- palette ---
-# 16 blues (identical to frame 1's locked palette) + crimson ramp + the
-# mauve transition tones that lit cloud edges need to land on.
 PALETTE_HEX = [
-    "080C1B", "0C1024", "161428", "131933", "17203C", "1C2646", "262B47",
-    "222F53", "29355B", "2C3A62", "2F3E69", "384368", "364776", "445783",
-    "4A5D8C", "4F6396",
-    "2E0A1A", "4E0F27", "7A1533", "A81A3F", "D42350", "F03A66", "FF6B8A",
-    "241A33", "3A2440", "55305B", "7A4570",
+    "0C1024", "131933", "161428", "17203C", "222F53", "262B47", "29355B",
+    "364776", "384368", "241A33", "3A2440", "55305B", "7A4570",
+    "4E0F27", "7A1533", "A81A3F", "D42350",
+    "2E0A1A",
 ]
 PALETTE = [tuple(int(h[i:i + 2], 16) for i in (0, 2, 4)) for h in PALETTE_HEX]
+HEX = {n: tuple(int(n[i:i + 2], 16) for i in (0, 2, 4)) for n in PALETTE_HEX}
 
-SKY_TOP, SKY_MID, SKY_LOW = (8, 11, 26), (12, 17, 38), (17, 24, 50)
-CLOUD = [(16, 22, 45), (27, 36, 68), (41, 55, 96), (60, 79, 130), (88, 110, 165)]
-CLOUD_BACK = [(13, 18, 37), (18, 25, 48), (24, 32, 60), (31, 41, 73), (38, 50, 86)]
-SEAM, SEAM_WARM = (10, 13, 30), (26, 15, 34)
+SKY_TOP, SKY_MID, SKY_LOW = HEX["0C1024"], HEX["131933"], HEX["17203C"]
+CLOUD = [HEX["161428"], HEX["17203C"], HEX["222F53"], HEX["29355B"], HEX["364776"]]
+CLOUD_BACK = [HEX["0C1024"], HEX["131933"], HEX["161428"], HEX["17203C"], HEX["262B47"]]
+SEAM, SEAM_WARM = HEX["0C1024"], HEX["2E0A1A"]
 
-MOON_CORE = (232, 46, 88)
-MOON_DEEP = (150, 24, 56)
-MOON_EDGE = (108, 18, 44)
-BLEED = (255, 120, 150)      # light forcing through a hairline crack
-GLOW = (196, 32, 70)
+MOON_CORE = HEX["D42350"]
+MOON_MID = HEX["A81A3F"]
+MOON_DEEP = HEX["7A1533"]
+MOON_EDGE = HEX["4E0F27"]
+GLOW = HEX["A81A3F"]
+BLEED = HEX["D42350"]        # brightest tone left in the palette
+BAND_RGB = HEX["D42350"]     # constant across frames: no flicker under the text
+
+STAR_TONES = [HEX["262B47"], HEX["29355B"], HEX["384368"]]
 
 BAYER = np.array([[0, 8, 2, 10], [12, 4, 14, 6],
                   [3, 11, 1, 9], [15, 7, 13, 5]]) / 16.0
 
 YY, XX = np.mgrid[0:H, 0:W]
-
 DIAG = {}
 
 
@@ -58,27 +70,38 @@ def puff_list(x0, x1, baseline_fn, rmin, rmax, step, jitter, seed):
     return puffs
 
 
-SEAM_Y = 41.0
-
 def top_edge(x):
-    return (SEAM_Y - 4.0 + 4.0 * math.sin(x / 23.0 + 0.4)
-            + 2.2 * math.sin(x / 7.5)
-            - 3.0 * math.exp(-((x - 80) ** 2) / (2 * 34.0 ** 2)))
+    return (SEAM_Y - 6.0 + 6.0 * math.sin(x / 37.0 + 0.4)
+            + 3.5 * math.sin(x / 12.0)
+            - 4.5 * math.exp(-((x - MOON_CX) ** 2) / (2 * 54.0 ** 2)))
+
 
 def bot_edge(x):
-    return (SEAM_Y + 5.0 - 3.6 * math.sin(x / 19.0 + 2.1)
-            - 2.0 * math.sin(x / 6.5 + 1.0)
-            + 2.6 * math.exp(-((x - 80) ** 2) / (2 * 34.0 ** 2)))
+    return (SEAM_Y + 7.0 - 5.5 * math.sin(x / 30.0 + 2.1)
+            - 3.0 * math.sin(x / 10.0 + 1.0)
+            + 4.0 * math.exp(-((x - MOON_CX) ** 2) / (2 * 54.0 ** 2)))
 
 
-BACK_TOP = puff_list(-12, W + 14, lambda x: 26 + 5 * math.sin(x / 26.0) + 3 * math.sin(x / 9.0), 5, 11, 7, 2.5, 101)
-BACK_BOT = puff_list(-12, W + 14, lambda x: 58 - 4 * math.sin(x / 21.0 + 1.2) - 3 * math.sin(x / 8.0), 5, 11, 7, 2.5, 202)
-FRONT_TOP = puff_list(-14, W + 16, top_edge, 6, 13, 8, 2.0, 303)
-FRONT_BOT = puff_list(-14, W + 16, bot_edge, 6, 13, 8, 2.0, 404)
+BACK_TOP = puff_list(-18, W + 22, lambda x: 34 + 8 * math.sin(x / 42.0) + 5 * math.sin(x / 14.0), 8, 17, 11, 4.0, 101)
+BACK_BOT = puff_list(-18, W + 22, lambda x: 94 - 6 * math.sin(x / 34.0 + 1.2) - 5 * math.sin(x / 13.0), 8, 17, 11, 4.0, 202)
+FRONT_TOP = puff_list(-22, W + 26, top_edge, 9, 20, 13, 3.2, 303)
+FRONT_BOT = puff_list(-22, W + 26, bot_edge, 9, 20, 13, 3.2, 404)
+
+# star field: fixed, drawn into the sky so it never re-rolls between frames
+_sr = np.random.RandomState(1234)
+STARS = []
+for _ in range(150):
+    sx = int(_sr.randint(0, W))
+    sy = int(_sr.randint(0, H))
+    bias = abs(sy - MOON_CY) / (H / 2)          # denser away from the seam
+    if _sr.rand() < 0.25 + 0.75 * bias:
+        STARS.append((sx, sy, STAR_TONES[_sr.randint(0, len(STAR_TONES))]))
+
+# fixed nibble pattern for wispy lips - a column that frays keeps fraying
+FRAY = np.random.RandomState(777).rand(2, W, 3)
 
 
 def displace(puffs, amp, sigma, direction, x_push):
-    """Push a bank away from the seam. Vertical opening + horizontal retreat."""
     out = []
     for (cx, cy, rad) in puffs:
         g = math.exp(-((cx - MOON_CX) ** 2) / (2 * sigma ** 2))
@@ -113,7 +136,7 @@ def shade_bank(img, puffs, fill_dir, ramp, seed, mask=None):
         run = np.where(mask[y], run + 1, 0)
         depth[y] = run
     shade = np.zeros((H, W))
-    shade[mask] = np.clip(1.0 - depth[mask] / 26.0, 0, 1)
+    shade[mask] = np.clip(1.0 - depth[mask] / 42.0, 0, 1)
 
     body = np.zeros((H, W))
     rim = np.zeros((H, W))
@@ -135,7 +158,7 @@ def shade_bank(img, puffs, fill_dir, ramp, seed, mask=None):
     val = np.clip(val, 0, 1)
 
     noise = np.zeros((H, W))
-    for (sx, amp, sc) in [(0, 0.085, 6), (5, 0.05, 3), (9, 0.03, 2)]:
+    for (sx, amp, sc) in [(0, 0.085, 8), (5, 0.05, 4), (9, 0.03, 2)]:
         nr = np.random.RandomState(seed + sx)
         small = nr.rand(H // sc + 2, W // sc + 2)
         noise += (np.kron(small, np.ones((sc, sc)))[:H, :W] - 0.5) * 2 * amp
@@ -160,8 +183,6 @@ def contact_line(top_m):
 
 
 def carve_crack(top_m, bot_m, crack_h, sigma_c, seed=5):
-    """Split the banks along their true contact line - an organic hairline,
-    not a rectangular cut."""
     if crack_h <= 0:
         return
     contact = contact_line(top_m)
@@ -175,11 +196,11 @@ def carve_crack(top_m, bot_m, crack_h, sigma_c, seed=5):
         if h < 0.35:
             continue
         if h < 0.75 and r.random() > (h - 0.35) / 0.40:
-            continue                      # ragged taper at the crack's ends
+            continue
         n = max(1, int(round(h)))
         y0 = c - (n - 1) // 2
         rows = list(range(y0, y0 + n))
-        if prev is not None and abs(y0 - prev) > 1:      # bridge a stepped lip
+        if prev is not None and abs(y0 - prev) > 1:
             lo, hi = sorted((prev, y0))
             rows += list(range(lo, hi + 1))
         prev = y0
@@ -189,13 +210,7 @@ def carve_crack(top_m, bot_m, crack_h, sigma_c, seed=5):
                 bot_m[y, x] = False
 
 
-# Fixed nibble pattern: identical draws every frame, so a column that frays
-# early keeps fraying as the gap grows - the wisps never re-roll.
-FRAY = np.random.RandomState(777).rand(2, W, 3)
-
-
 def fray_lip(top_m, bot_m, amount, sigma):
-    """Nibble the lip facing the opening into wisps instead of a clean arc."""
     if amount <= 0:
         return
     for x in range(W):
@@ -215,8 +230,6 @@ def fray_lip(top_m, bot_m, amount, sigma):
 
 
 def single_opening(top_m, bot_m):
-    """Light may only come through THE crack. Pinholes elsewhere in the banks
-    get sealed so nothing leaks where it shouldn't."""
     gap = ~(top_m | bot_m)
     if not gap.any():
         return gap
@@ -238,71 +251,21 @@ def single_opening(top_m, bot_m):
     return gap
 
 
-# ------------------------------------------------------------ frame spec ----
-# amp is calibrated per frame so the measured centre gap hits `gap_px`.
-FRAMES = {
-    1: dict(halo_stretch=1.0, gap_px=0,  sigma=12, x_push=0.0, moon_r=0.0,  glow=0.00, bloom=0.0, halo=0.00, crack_h=0.0, crack_s=1),
-    2: dict(halo_stretch=2.4, gap_px=0,  sigma=13, x_push=0.0, moon_r=7.5,  glow=0.24, bloom=1.0, halo=0.66, crack_h=1.0, crack_s=16),
-    3: dict(halo_stretch=1.8, gap_px=5,  sigma=19, x_push=0.6, moon_r=9.5,  glow=0.34, bloom=0.55, halo=0.56, crack_h=1.6, crack_s=26),
-    4: dict(halo_stretch=1.45, crack_h=0.0, crack_s=1, gap_px=9, sigma=25, x_push=2.0, moon_r=11.5, glow=0.60, halo=0.60, bloom=0.22,
-            rim_s=26.0, bloom_off_disc=True, fray=0.35, fray_s=30.0),
-    5: dict(halo_stretch=1.2, crack_h=0.0, crack_s=1, gap_px=15, sigma=31, x_push=4.0, moon_r=13.5, glow=0.74, halo=0.74, bloom=0.10,
-            rim_s=34.0, bloom_off_disc=True, fray=0.60, fray_s=40.0),
-    6: dict(halo_stretch=1.05, crack_h=0.0, crack_s=1, visible=0.80, gap_px=23, sigma=38, x_push=7.0, moon_r=16.0, glow=0.86, halo=0.86, bloom=0.10,
-            rim_s=42.0, bloom_off_disc=True, fray=0.75, fray_s=50.0),
-    7: dict(halo_stretch=1.0, crack_h=0.0, crack_s=1, visible=0.92, gap_px=32, sigma=46, x_push=11.0, moon_r=19.0, glow=0.94, halo=0.94, bloom=0.05,
-            rim_s=52.0, bloom_off_disc=True, fray=0.85, fray_s=60.0),
-    # 8-10: the old frame-8 endpoint split three ways. A single 7->8 step moved
-    # the cloud lip ~10px, which crossfades as a ghost rather than as motion.
-    8:  dict(halo_stretch=1.0, crack_h=0.0, crack_s=1, cover=0.670, sigma=50, x_push=12.7, moon_r=20.0, glow=0.96, halo=0.96, bloom=0.030,
-             rim_s=60.0, bloom_off_disc=True, fray=0.90, fray_s=66.0),
-    9:  dict(halo_stretch=1.0, crack_h=0.0, crack_s=1, cover=0.57, sigma=54, x_push=14.3, moon_r=21.0, glow=0.98, halo=0.98, bloom=0.015,
-             rim_s=68.0, bloom_off_disc=True, fray=0.95, fray_s=72.0),
-    10: dict(halo_stretch=1.0, crack_h=0.0, crack_s=1, cover=0.47, sigma=58, x_push=16.0, moon_r=22.0, glow=1.00, halo=1.00, bloom=0.000,
-             rim_s=75.0, bloom_off_disc=True, fray=1.00, fray_s=78.0),
-}
-
-
-def measure_gap(amp, sigma, x_push):
-    t = bank_mask(displace(FRONT_TOP, amp, sigma, -1, x_push), -1)
-    b = bank_mask(displace(FRONT_BOT, amp, sigma, +1, x_push), +1)
-    col = ~(t[:, 80] | b[:, 80])
-    return int(col.sum())
-
-
-def bank_cover(amp, sigma, x_push):
-    """Fraction of the canvas still occupied by the front banks."""
-    tm = bank_mask(displace(FRONT_TOP, amp, sigma, -1, x_push), -1)
-    bm = bank_mask(displace(FRONT_BOT, amp, sigma, +1, x_push), +1)
-    return float((tm | bm).mean())
-
-
-def calibrate_cover(target, sigma, x_push):
-    """After the disc is fully clear, `visible` pins at 100% and stops ordering
-    the frames - keep driving the retreat off how much cloud is left."""
-    lo, hi = 0.0, 60.0
-    for _ in range(24):
-        mid = (lo + hi) / 2
-        if bank_cover(mid, sigma, x_push) > target:
-            lo = mid
-        else:
-            hi = mid
-    return hi
+# ---------------------------------------------------------- calibration -----
+def _banks(amp, sigma, x_push):
+    return (bank_mask(displace(FRONT_TOP, amp, sigma, -1, x_push), -1),
+            bank_mask(displace(FRONT_BOT, amp, sigma, +1, x_push), +1))
 
 
 def visible_frac(amp, sigma, x_push, r):
-    """Fraction of the disc left uncovered by the front banks."""
-    tm = bank_mask(displace(FRONT_TOP, amp, sigma, -1, x_push), -1)
-    bm = bank_mask(displace(FRONT_BOT, amp, sigma, +1, x_push), +1)
+    tm, bm = _banks(amp, sigma, x_push)
     disc = ((XX - MOON_CX) ** 2 + (YY - MOON_CY) ** 2) <= r * r
     return float((disc & ~(tm | bm)).sum()) / max(int(disc.sum()), 1)
 
 
 def calibrate_visible(target, sigma, x_push, r):
-    """Once x_push dominates, the centre-column gap saturates and can no longer
-    steer the opening - drive amp off how much disc is actually showing."""
-    lo, hi = 0.0, 60.0
-    for _ in range(24):
+    lo, hi = 0.0, 90.0
+    for _ in range(26):
         mid = (lo + hi) / 2
         if visible_frac(mid, sigma, x_push, r) < target:
             lo = mid
@@ -311,11 +274,22 @@ def calibrate_visible(target, sigma, x_push, r):
     return hi
 
 
-def calibrate(gap_px, sigma, x_push):
+def calibrate_clear(margin, sigma, x_push, r):
+    """No cloud within `margin` px of the disc anywhere - the control that keeps
+    working after `visible` has pinned at 100%."""
+    return calibrate_visible(1.0, sigma, x_push, r + margin)
+
+
+def measure_gap(amp, sigma, x_push):
+    t, b = _banks(amp, sigma, x_push)
+    return int((~(t[:, int(MOON_CX)] | b[:, int(MOON_CX)])).sum())
+
+
+def calibrate_gap(gap_px, sigma, x_push):
     if gap_px <= 0:
         return 0.0
-    lo, hi = 0.0, 40.0
-    for _ in range(22):
+    lo, hi = 0.0, 60.0
+    for _ in range(24):
         mid = (lo + hi) / 2
         if measure_gap(mid, sigma, x_push) < gap_px:
             lo = mid
@@ -324,15 +298,50 @@ def calibrate(gap_px, sigma, x_push):
     return hi
 
 
+# ------------------------------------------------------------ frame spec ----
+FRAMES = {
+    1:  dict(moon_r=0.0,  sigma=20, x_push=0.0,  gap_px=0, glow=0.00, halo=0.00,
+             halo_stretch=1.0, bloom=0.0, crack_h=0.0, crack_s=1, fray=0.0),
+    2:  dict(moon_r=30.0, sigma=22, x_push=0.0,  gap_px=0, glow=0.20, halo=0.30,
+             halo_stretch=2.6, bloom=0.85, crack_h=1.0, crack_s=26, fray=0.0),
+    3:  dict(moon_r=34.0, sigma=30, x_push=0.6,  gap_px=4, glow=0.32, halo=0.44,
+             halo_stretch=2.0, bloom=0.55, crack_h=2.0, crack_s=42, fray=0.15, fray_s=40),
+    4:  dict(moon_r=38.0, visible=0.17, sigma=40, x_push=2.0, glow=0.46, halo=0.52,
+             halo_stretch=1.6, bloom=0.28, crack_h=0.0, crack_s=1, fray=0.35, fray_s=48,
+             rim_s=44.0, bloom_off_disc=True),
+    5:  dict(moon_r=42.0, visible=0.33, sigma=50, x_push=4.0, glow=0.58, halo=0.62,
+             halo_stretch=1.35, bloom=0.16, crack_h=0.0, crack_s=1, fray=0.50, fray_s=58,
+             rim_s=54.0, bloom_off_disc=True),
+    6:  dict(moon_r=46.0, visible=0.51, sigma=60, x_push=6.5, glow=0.70, halo=0.72,
+             halo_stretch=1.18, bloom=0.10, crack_h=0.0, crack_s=1, fray=0.65, fray_s=68,
+             rim_s=66.0, bloom_off_disc=True),
+    7:  dict(moon_r=49.0, visible=0.75, sigma=70, x_push=9.0, glow=0.80, halo=0.82,
+             halo_stretch=1.08, bloom=0.06, crack_h=0.0, crack_s=1, fray=0.78, fray_s=78,
+             rim_s=78.0, bloom_off_disc=True),
+    8:  dict(moon_r=51.0, visible=0.97, sigma=80, x_push=12.0, glow=0.88, halo=0.90,
+             halo_stretch=1.02, bloom=0.03, crack_h=0.0, crack_s=1, fray=0.88, fray_s=88,
+             rim_s=90.0, bloom_off_disc=True),
+    9:  dict(moon_r=53.0, clear=1.0, sigma=92, x_push=15.0, glow=0.95, halo=0.96,
+             halo_stretch=1.0, bloom=0.0, crack_h=0.0, crack_s=1, fray=0.94, fray_s=98,
+             rim_s=104.0, bloom_off_disc=True),
+    10: dict(moon_r=55.0, clear=7.0, sigma=108, x_push=19.0, glow=1.00, halo=1.00,
+             halo_stretch=1.0, bloom=0.0, crack_h=0.0, crack_s=1, fray=1.00, fray_s=110,
+             rim_s=120.0, bloom_off_disc=True),
+}
+
+
+def amp_for(spec):
+    if 'clear' in spec:
+        return calibrate_clear(spec['clear'], spec['sigma'], spec['x_push'], spec['moon_r'])
+    if 'visible' in spec:
+        return calibrate_visible(spec['visible'], spec['sigma'], spec['x_push'], spec['moon_r'])
+    return calibrate_gap(spec['gap_px'], spec['sigma'], spec['x_push'])
+
+
 # --------------------------------------------------------------- render -----
 def render(frame):
     spec = FRAMES[frame]
-    if 'cover' in spec:
-        amp = calibrate_cover(spec['cover'], spec['sigma'], spec['x_push'])
-    elif 'visible' in spec:
-        amp = calibrate_visible(spec['visible'], spec['sigma'], spec['x_push'], spec['moon_r'])
-    else:
-        amp = calibrate(spec['gap_px'], spec['sigma'], spec['x_push'])
+    amp = amp_for(spec)
     img = np.zeros((H, W, 3), dtype=np.uint8)
 
     # sky
@@ -340,38 +349,45 @@ def render(frame):
         t = y / (H - 1)
         img[y, :] = lerp(SKY_TOP, SKY_MID, t / .5) if t < .5 else lerp(SKY_MID, SKY_LOW, (t - .5) / .5)
 
-    # distant bank
+    # stars, drawn into the sky so cloud simply covers them
+    for (sx, sy, tone) in STARS:
+        img[sy, sx] = tone
+
     shade_bank(img, BACK_TOP, -1, CLOUD_BACK, 11)
     shade_bank(img, BACK_BOT, +1, CLOUD_BACK, 22)
 
-    # ---- moon (behind the front banks, in front of the distant bank) ----
+    # ---- moon ----
     moon_disc = np.zeros((H, W), dtype=bool)
     r = spec['moon_r']
     if r > 0:
         st = spec['halo_stretch']
-        dist = np.sqrt((XX - MOON_CX) ** 2 + ((YY - MOON_CY) * 1.0) ** 2)
+        dist = np.sqrt((XX - MOON_CX) ** 2 + (YY - MOON_CY) ** 2)
         hdist = np.sqrt(((XX - MOON_CX) / st) ** 2 + ((YY - MOON_CY) * (1.0 + 0.35 * (st - 1))) ** 2)
-        # halo bleeding into the surrounding sky/cloud
-        halo = np.clip(1.0 - (hdist - r) / (r * 2.4), 0, 1) ** 2 * spec['halo']
+        halo = np.clip(1.0 - (hdist - r) / (r * 2.0), 0, 1) ** 2 * spec['halo']
         halo[dist <= r] = 0
         for y in range(H):
             for x in range(W):
                 if halo[y, x] > 0.02:
-                    img[y, x] = lerp(tuple(int(v) for v in img[y, x]), GLOW, float(halo[y, x]) * 0.75)
-        # disc: darker toward the limb, a couple of banded "seas" for texture
+                    img[y, x] = lerp(tuple(int(v) for v in img[y, x]), GLOW, float(halo[y, x]) * 0.70)
+
         inside = dist <= r
         moon_disc = inside
         limb = np.clip(dist / max(r, 0.001), 0, 1)
         tone = 1.0 - 0.55 * limb ** 2
-        band = (np.sin((YY - MOON_CY) * 0.9 + 0.6) > 0.72) | (np.sin((YY - MOON_CY) * 0.55 - 1.4) > 0.86)
-        tone = np.where(band, tone - 0.16, tone)
+        band = (np.sin((YY - MOON_CY) * 0.55 + 0.6) > 0.80) | (np.sin((YY - MOON_CY) * 0.33 - 1.4) > 0.90)
+        tone = np.where(band, tone - 0.13, tone)
         bay = np.tile(BAYER, (H // 4 + 1, W // 4 + 1))[:H, :W]
         tone = tone + (bay - 0.5) * 0.10
         for y in range(H):
             for x in range(W):
                 if inside[y, x]:
                     t = float(np.clip(tone[y, x], 0, 1))
-                    img[y, x] = lerp(MOON_EDGE, MOON_CORE, t) if t > 0.5 else lerp(MOON_EDGE, MOON_DEEP, t * 2)
+                    if t > 0.66:
+                        img[y, x] = lerp(MOON_MID, MOON_CORE, (t - 0.66) / 0.34)
+                    elif t > 0.33:
+                        img[y, x] = lerp(MOON_DEEP, MOON_MID, (t - 0.33) / 0.33)
+                    else:
+                        img[y, x] = lerp(MOON_EDGE, MOON_DEEP, t / 0.33)
 
     # ---- front banks ----
     top_p = displace(FRONT_TOP, amp, spec['sigma'], -1, spec['x_push'])
@@ -379,7 +395,7 @@ def render(frame):
     top_mask = bank_mask(top_p, -1)
     bot_mask = bank_mask(bot_p, +1)
     carve_crack(top_mask, bot_mask, spec['crack_h'], spec['crack_s'])
-    fray_lip(top_mask, bot_mask, spec.get('fray', 0.0), spec.get('fray_s', 34.0))
+    fray_lip(top_mask, bot_mask, spec.get('fray', 0.0), spec.get('fray_s', 40.0))
     gap = single_opening(top_mask, bot_mask)
     shade_bank(img, bot_p, +1, CLOUD, 44, mask=bot_mask)
     shade_bank(img, top_p, -1, CLOUD, 33, mask=top_mask)
@@ -392,23 +408,21 @@ def render(frame):
             continue
         edge = col.max()
         if gap[min(edge + 1, H - 1), x]:
-            continue          # this column has opened; no contact shadow
-        warm = math.exp(-((x - 80) ** 2) / (2 * 22.0 ** 2))
+            continue
+        warm = math.exp(-((x - MOON_CX) ** 2) / (2 * 34.0 ** 2))
         for k, strength in enumerate((0.92, 0.66, 0.38, 0.18)):
             y = edge + 1 + k
             if 0 <= y < H:
                 tgt = lerp(SEAM, SEAM_WARM, warm * 0.6)
                 s = strength * (0.78 if (x + y * 3) % 5 == 0 else 1.0)
                 img[y, x] = lerp(tuple(int(v) for v in img[y, x]), tgt, s)
-        if (x * 7 + int(top_edge(x))) % 3 != 0:
-            img[edge, x] = lerp(tuple(int(v) for v in img[edge, x]), (34, 44, 78), 0.55)
 
-    # ---- crimson light spilling from the gap onto the cloud edges ----
+    # ---- crimson light spilling from the opening onto cloud edges ----
     if spec['glow'] > 0 and gap.any():
         moon_lit = gap & (np.sqrt((XX - MOON_CX) ** 2 + (YY - MOON_CY) ** 2) <= r + r * 1.6)
         src = moon_lit if moon_lit.any() else gap
         d = ndimage.distance_transform_edt(~src)
-        falloff = 2.4 + 7.5 * spec['glow']
+        falloff = 3.6 + 11.0 * spec['glow']
         light = np.exp(-d / falloff) * spec['glow']
         light[src] = 0
         light = light * cloud_mask
@@ -418,9 +432,8 @@ def render(frame):
                 if l > 0.03:
                     img[y, x] = lerp(tuple(int(v) for v in img[y, x]), GLOW, min(l * 1.05, 0.82))
 
-        # hard rim: cloud pixels directly touching the opening catch the light
         edge_ring = cloud_mask & ndimage.binary_dilation(src, iterations=1)
-        rim_s = spec.get('rim_s')          # None -> uniform rim (frames 1-3)
+        rim_s = spec.get('rim_s')
         base_rim = 0.55 + 0.35 * spec['glow']
         for y in range(H):
             for x in range(W):
@@ -429,28 +442,35 @@ def render(frame):
                         0.30 + 0.70 * math.exp(-((x - MOON_CX) ** 2) / (2 * rim_s ** 2))
                     img[y, x] = lerp(tuple(int(v) for v in img[y, x]), MOON_CORE, base_rim * w)
 
-        # bloom: a thin crack blows out brighter than the disc itself
         if spec['bloom'] > 0:
             thin = src & (ndimage.distance_transform_edt(src) <= 1.6)
             if spec.get('bloom_off_disc'):
-                thin &= ~moon_disc     # once the disc is out, don't wash it out
+                thin &= ~moon_disc
             for y in range(H):
                 for x in range(W):
                     if thin[y, x]:
                         img[y, x] = lerp(tuple(int(v) for v in img[y, x]), BLEED, spec['bloom'])
 
-    DIAG['disc_px'] = int(moon_disc.sum())
-    DIAG['visible_px'] = int((moon_disc & ~cloud_mask).sum())
-    DIAG['visible'] = (DIAG['visible_px'] / DIAG['disc_px']) if DIAG['disc_px'] else 0.0
-
     # ---- vignette ----
-    v = np.clip((np.sqrt(((XX - 80) / 96.0) ** 2 + ((YY - 40) / 54.0) ** 2) - 0.55) / 0.75, 0, 1) * 0.42
+    v = np.clip((np.sqrt(((XX - MOON_CX) / 154.0) ** 2 + ((YY - MOON_CY) / 86.0) ** 2) - 0.60) / 0.75, 0, 1) * 0.40
     for y in range(H):
         for x in range(W):
             if v[y, x] > 0.02:
-                img[y, x] = lerp(tuple(int(t) for t in img[y, x]), (6, 8, 20), float(v[y, x]))
+                img[y, x] = lerp(tuple(int(t) for t in img[y, x]), SKY_TOP, float(v[y, x]))
 
-    img = (img.astype(float) * 0.90 + np.array((5, 7, 18)) * 0.10).astype(np.uint8)
+    # ---- inscription zone, stamped LAST so nothing above can dirty it ----
+    band = np.zeros((H, W), dtype=bool)
+    band[BY0:BY1, BX0:BX1] = True
+    band_lit = band & moon_disc & ~cloud_mask
+    img[band_lit] = BAND_RGB
+
+    DIAG['disc_px'] = int(moon_disc.sum())
+    DIAG['visible'] = (int((moon_disc & ~cloud_mask).sum()) / DIAG['disc_px']) if DIAG['disc_px'] else 0.0
+    DIAG['band_clear'] = float(band_lit.sum()) / (BAND_W * BAND_H)
+    DIAG['band_cloud'] = int((band & cloud_mask).sum())
+    DIAG['cover'] = float(cloud_mask.mean())
+    DIAG['amp'] = amp
+
     return quantize(Image.fromarray(img, 'RGB'))
 
 
@@ -460,17 +480,15 @@ _flat = [c for rgb in PALETTE for c in rgb]
 _flat += [0, 0, 0] * (256 - len(PALETTE))
 _pal_img.putpalette(_flat)
 
+
 def quantize(im):
     return im.quantize(palette=_pal_img, dither=Image.Dither.NONE).convert('RGB')
 
 
 if __name__ == '__main__':
     import sys
-    frames = [int(a) for a in sys.argv[1:]] or [1, 2, 3]
-    for f in frames:
+    for f in ([int(a) for a in sys.argv[1:]] or list(range(1, 11))):
         im = render(f)
-        im.save(f'/home/claude/f{f}.png')
-        im.resize((W * 5, H * 5), Image.NEAREST).save(f'/home/claude/f{f}_prev.png')
-        print('frame', f, 'gap',
-              measure_gap(calibrate(FRAMES[f]['gap_px'], FRAMES[f]['sigma'], FRAMES[f]['x_push']),
-                          FRAMES[f]['sigma'], FRAMES[f]['x_push']))
+        im.save(f'/home/claude/work/b{f:02d}.png')
+        print('frame %02d  amp %5.1f  visible %5.1f%%  band clear %5.1f%%  cover %5.1f%%'
+              % (f, DIAG['amp'], 100 * DIAG['visible'], 100 * DIAG['band_clear'], 100 * DIAG['cover']))
