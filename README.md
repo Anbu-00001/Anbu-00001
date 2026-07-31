@@ -82,8 +82,14 @@ I am a developer focused on creating robust backend systems, exploring network p
 
 <br>
 <div align="center">
-  <a href="https://github.com/Anbu-00001">
+  <a href="https://anbu-00001.github.io/Anbu-00001/souls_counter_demo.html" title="Click to scroll-scrub the Crimson Moon Reveal!">
     <img src="./souls_view_counter.svg" alt="Visions Witnessed Counter - Crimson Moon Reveal" width="740" />
+  </a>
+  <br><br>
+  <a href="https://anbu-00001.github.io/Anbu-00001/souls_counter_demo.html" title="Click to open interactive scroll scrubbing">
+    <img src="https://api.visitorbadge.io/api/visitors?path=Anbu-00001&label=✦%20VISIONS%20WITNESSED%20✦&labelColor=%2308101d&countColor=%238a051d&style=flat-square" alt="Realtime Visions Witnessed Counter" height="26" />
+    &nbsp;
+    <img src="https://komarev.com/ghpvc/?username=Anbu-00001&color=8a051d&label=PROFILE+VIEWS&style=flat-square" alt="Komarev Profile Views" height="26" />
   </a>
 </div>
 <br>
