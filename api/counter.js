@@ -13,12 +13,12 @@ export default async function handler(req, res) {
   const username = req.query.username || 'Anbu-00001';
 
   try {
-    const counterRes = await fetch(`https://komarev.com/ghpvc/?username=${username}`);
+    const counterRes = await fetch(`https://api.visitorbadge.io/api/visitors?path=${username}`);
     if (counterRes.ok) {
       const svgText = await counterRes.text();
-      const match = svgText.match(/<text[^>]*>(\d+)<\/text>/g);
-      if (match && match.length > 0) {
-        const val = parseInt(match[match.length - 1].replace(/<[^>]+>/g, ''), 10);
+      const match = svgText.match(/VISITORS:\s*(\d+)/i);
+      if (match && match[1]) {
+        const val = parseInt(match[1], 10);
         if (!isNaN(val) && val > 0) {
           globalCount = val;
         }

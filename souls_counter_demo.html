@@ -121,8 +121,23 @@ const progressBar = document.getElementById('progressBar');
 // Array of 10 frame elements
 const frames = Array.from({length: 10}, (_, i) => document.getElementById(`frame${i}`));
 
-// Fetch live view count
-(async()=>{try{const r=await fetch('https://komarev.com/ghpvc/?username=Anbu-00001&format=json');if(r.ok){const d=await r.json();if(d.value)BASE_VIEWS=d.value;}}catch(e){}})();
+// Fetch live view count from real visitor counter API
+(async()=>{
+  try {
+    const r = await fetch('https://api.visitorbadge.io/api/visitors?path=Anbu-00001');
+    if (r.ok) {
+      const text = await r.text();
+      const match = text.match(/VISITORS:\s*(\d+)/i);
+      if (match && match[1]) {
+        const val = parseInt(match[1], 10);
+        if (!isNaN(val) && val > 0) {
+          BASE_VIEWS = val;
+          if (typeof updateScrub === 'function') updateScrub();
+        }
+      }
+    }
+  } catch(e) {}
+})();
 
 // Ember particles
 const canvas = document.getElementById('embersCanvas');
