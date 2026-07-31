@@ -1,8 +1,15 @@
-# Hi there, Anbu here! 👋
+# Greetings Wanderer...
 
-Building resilient networks, autonomous AIOps systems, and offline-first technology.
+<div align="center">
+  <a href="https://anbu-00001.github.io/Anbu-00001/souls_counter_demo.html" title="Click to scroll-scrub the Crimson Moon Reveal!">
+    <img src="https://souls-view-counter.vercel.app/api/counter" alt="Beheld by Wanderers - Crimson Moon Reveal" width="100%" />
+  </a>
+  <img src="https://komarev.com/ghpvc/?username=Anbu-00001" width="1" height="1" alt="" />
+</div>
 
-I am a developer focused on creating robust backend systems, exploring network performance, Agentic AI, and building applied AI solutions. Welcome to my GitHub!
+I build software that keeps working when the network doesn't — and that can prove it did what it claims.
+
+Recent work spans a tamper-evident evidence recorder for Android, a deterministic CI merge gate, a local-first calibration CLI in Rust, an on-device scam-call shield, and a daemon that turns a spare phone into a Linux touch monitor. Mostly systems, networks, and multi-agent AI held to constraints it can't talk its way around.
 
 ---
 
@@ -65,13 +72,6 @@ I am a developer focused on creating robust backend systems, exploring network p
 </p>
 
 ---
-
-<div align="center">
-  <a href="https://anbu-00001.github.io/Anbu-00001/souls_counter_demo.html" title="Click to scroll-scrub the Crimson Moon Reveal!">
-    <img src="https://souls-view-counter.vercel.app/api/counter" alt="Visions Witnessed - Crimson Moon Reveal" width="100%" />
-  </a>
-  <img src="https://komarev.com/ghpvc/?username=Anbu-00001" width="1" height="1" alt="" />
-</div>
 
 <p align="center">
   <i>Let's connect! Find me on <a href="https://www.linkedin.com/in/anbuchelvan-ganesan-549b13326?utm_source=share_via&utm_content=profile&utm_medium=member_android">LinkedIn</a> or reach out via Gmail at anbuchelvannew@gmail.com</i>
