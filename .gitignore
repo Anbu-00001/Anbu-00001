@@ -44,3 +44,5 @@ dist/
 build/
 *.tmp
 *.log
+.vercel
+.env*

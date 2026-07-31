@@ -83,7 +83,8 @@ I am a developer focused on creating robust backend systems, exploring network p
 <br>
 <div align="center">
   <a href="https://anbu-00001.github.io/Anbu-00001/souls_counter_demo.html" title="Click to scroll-scrub the Crimson Moon Reveal!">
-    <img src="./souls_view_counter.svg" alt="Visions Witnessed Counter - Crimson Moon Reveal" width="740" />
+    <img src="https://souls-view-counter.vercel.app/api/counter" alt="Visions Witnessed - Crimson Moon Reveal" width="740" />
   </a>
+  <img src="https://komarev.com/ghpvc/?username=Anbu-00001" width="1" height="1" alt="" />
 </div>
 <br>

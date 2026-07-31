@@ -113,7 +113,9 @@
   <footer>Handcrafted 10-frame Piskel Pixel Art Sequence for Anbu-00001</footer>
 
 <script>
-let BASE_VIEWS = 4192;
+// Replaced by the live count on load; 0 so a failed fetch reads as unknown
+// rather than showing an invented number.
+let BASE_VIEWS = 0;
 const scrubSection = document.getElementById('scrubSection');
 const counterDisplay = document.getElementById('counterDisplay');
 const progressBar = document.getElementById('progressBar');
@@ -121,22 +123,24 @@ const progressBar = document.getElementById('progressBar');
 // Array of 10 frame elements
 const frames = Array.from({length: 10}, (_, i) => document.getElementById(`frame${i}`));
 
-// Fetch live view count from real visitor counter API
+// Live view count, from the same endpoint the README banner renders.
+// (The previous source, api.visitorbadge.io, is dead — it now serves a
+// Cloudflare error page, so this silently fell back to a placeholder.)
+const COUNTER_ENDPOINT = 'https://souls-view-counter.vercel.app/api/counter';
+
 (async()=>{
   try {
-    const r = await fetch('https://api.visitorbadge.io/api/visitors?path=Anbu-00001');
-    if (r.ok) {
-      const text = await r.text();
-      const match = text.match(/VISITORS:\s*(\d+)/i);
-      if (match && match[1]) {
-        const val = parseInt(match[1], 10);
-        if (!isNaN(val) && val > 0) {
-          BASE_VIEWS = val;
-          if (typeof updateScrub === 'function') updateScrub();
-        }
-      }
+    const r = await fetch(`${COUNTER_ENDPOINT}?debug=1`, {cache:'no-store'});
+    if (!r.ok) throw new Error(`counter ${r.status}`);
+    const data = await r.json();
+    const val = Number(data && data.count);
+    if (Number.isFinite(val) && val > 0) {
+      BASE_VIEWS = val;
+      if (typeof updateScrub === 'function') updateScrub();
     }
-  } catch(e) {}
+  } catch(e) {
+    console.warn('live count unavailable, showing last known value:', e.message);
+  }
 })();
 
 // Ember particles

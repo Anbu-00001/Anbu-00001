@@ -1,0 +1,10 @@
+# Only api/ + lib/ are needed to serve the counter. The pixel art already
+# lives inside lib/frames.js, so the source PNGs and static pages stay out of
+# the deployment.
+piskel_frames/
+assets/
+scripts/
+*.svg
+*.html
+souls_badge_serverless.js
+README.md
