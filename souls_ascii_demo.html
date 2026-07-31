@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Souls ASCII Code Scroll-Scrubbed View Counter</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@700&family=Press+Start+2P&family=Cinzel:wght@700&display=swap');
+
+    :root {
+      --bg: #060a12;
+      --gold: #d4af37;
+      --crimson: #ff003c;
+      --bone: #f5eedc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--bone);
+      font-family: 'Cinzel', serif;
+      overflow-x: hidden;
+    }
+
+    .spacer {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: radial-gradient(circle at center, #0e1728 0%, #060a12 100%);
+      padding: 20px;
+    }
+
+    .spacer h1 {
+      font-size: 2.2rem;
+      color: var(--gold);
+      letter-spacing: 5px;
+      margin-bottom: 15px;
+      text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+    }
+
+    .spacer p {
+      font-family: 'Fira Code', monospace;
+      color: #5b8dbd;
+      font-size: 0.95rem;
+      max-width: 640px;
+      line-height: 1.6;
+    }
+
+    .scroll-hint {
+      margin-top: 35px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      color: var(--crimson);
+      animation: pulseHint 1.5s infinite alternate;
+    }
+
+    @keyframes pulseHint {
+      0% { opacity: 0.4; transform: translateY(0); }
+      100% { opacity: 1; transform: translateY(8px); }
+    }
+
+    /* Scroll Scrub Section */
+    .scrub-container {
+      height: 250vh;
+      position: relative;
+    }
+
+    .sticky-viewport {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Terminal Frame */
+    .terminal-window {
+      position: relative;
+      width: 760px;
+      max-width: 95vw;
+      background: #080e18;
+      border: 2px solid #3d2f1c;
+      border-radius: 8px;
+      box-shadow: 0 0 45px rgba(255, 0, 60, 0.3), inset 0 0 60px rgba(0,0,0,0.9);
+      overflow: hidden;
+    }
+
+    .terminal-bar {
+      height: 28px;
+      background: #0d1422;
+      border-bottom: 1px solid #1a273e;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+
+    .terminal-title {
+      font-family: 'Fira Code', monospace;
+      font-size: 10px;
+      color: #4c83b6;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ASCII Matrix Display */
+    .ascii-stage {
+      position: relative;
+      padding: 15px;
+      background: #060a12;
+      font-family: 'Fira Code', monospace;
+      font-size: 10.5px;
+      line-height: 1.1;
+      letter-spacing: 1px;
+      font-weight: 700;
+      white-space: pre;
+      overflow: hidden;
+      user-select: none;
+      min-height: 250px;
+    }
+
+    /* HUD Box (Left Corner) */
+    .hud-compact-left {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: #08101d;
+      border: 1.5px solid #3d2f1c;
+      padding: 8px 12px;
+      border-radius: 3px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.9);
+      z-index: 10;
+    }
+
+    .hud-title-compact {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      letter-spacing: 2px;
+      color: var(--gold);
+      margin-bottom: 5px;
+    }
+
+    .counter-box-compact {
+      background: #1a080c;
+      border: 1px solid #8a051d;
+      padding: 4px 8px;
+      border-radius: 2px;
+    }
+
+    .counter-val-compact {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 11px;
+      color: var(--bone);
+      text-shadow: 1px 1px 0px #8a051d;
+      letter-spacing: 2px;
+    }
+
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      padding: 10px 20px;
+      background: #122238;
+      color: var(--gold);
+      border: 2px solid var(--gold);
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: var(--gold);
+      color: #060a12;
+      box-shadow: 0 0 15px rgba(212,175,55,0.6);
+    }
+
+    .progress-bar-wrap {
+      width: 250px;
+      height: 10px;
+      background: #101c2e;
+      border: 1px solid #3d2f1c;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--crimson), var(--gold));
+      transition: width 0.05s linear;
+    }
+
+    footer {
+      padding: 40px 20px;
+      text-align: center;
+      background: #04070d;
+      color: #5b8dbd;
+      font-family: monospace;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="spacer">
+    <h1>⚔️ ASCII SOULS TELEMETRY ⚔️</h1>
+    <p>Scroll down into the mist to scrub through the ANSI ASCII sequence. Watch the black/blue ASCII cloud masses part left and right while the Crimson Moon enlarges in full ASCII matrix focus.</p>
+    <div class="scroll-hint">▼ SCROLL DOWN TO REVEAL ▼</div>
+  </div>
+
+  <div class="scrub-container" id="scrubSection">
+    <div class="sticky-viewport">
+      
+      <div class="terminal-window">
+        <div class="terminal-bar">
+          <div class="dot dot-red"></div>
+          <div class="dot dot-yellow"></div>
+          <div class="dot dot-green"></div>
+          <div class="terminal-title">terminal://souls-telemetry.asc</div>
+        </div>
+
+        <!-- STUCK TO TOP-LEFT CORNER -->
+        <div class="hud-compact-left">
+          <div class="hud-title-compact">✦ VISIONS WITNESSED ✦</div>
+          <div class="counter-box-compact">
+            <span class="counter-val-compact" id="counterDisplay">004,192</span>
+          </div>
+        </div>
+
+        <!-- ASCII Stage Canvas -->
+        <div class="ascii-stage" id="asciiStage"></div>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="replayBtn">↺ REPLAY REVEAL</button>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="spacer">
+    <h2>ASCII MOON ENLARGED & REVEALED</h2>
+    <p>Scroll back up to watch the ASCII clouds engulf the horizon again.</p>
+  </div>
+
+  <footer>
+    Rendered with ANSI Unicode Block Matrices & Pillow Luminance Sampling for Anbu-00001
+  </footer>
+
+  <script>
+    let BASE_VIEWS = 4192;
+    const COLS = 76;
+    const ROWS = 22;
+    const ASCII_CHARS = [" ", "░", "▒", "▓", "█"];
+
+    const scrubSection = document.getElementById('scrubSection');
+    const asciiStage = document.getElementById('asciiStage');
+    const counterDisplay = document.getElementById('counterDisplay');
+    const progressBar = document.getElementById('progressBar');
+    const replayBtn = document.getElementById('replayBtn');
+
+    // Fetch Live View Counter API
+    async function fetchDynamicCount() {
+      try {
+        const res = await fetch('https://komarev.com/ghpvc/?username=Anbu-00001&format=json');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.value) BASE_VIEWS = data.value;
+        }
+      } catch (err) {
+        console.log('Using baseline view count:', err.message);
+      }
+    }
+    fetchDynamicCount();
+
+    // Render ASCII Grid Procedurally based on Scroll Progress [0.0 to 1.0]
+    function renderAsciiScene(progress) {
+      const img_w = 380;
+      const img_h = 110;
+      
+      const moon_cx = img_w / 2;
+      const moon_cy = img_h / 2 + 2;
+      // Moon enlarges from radius 20 to 42 as progress goes from 0 to 1
+      const moon_r = 20 + progress * 22;
+
+      const left_reach = (img_w * 0.62) * (1.0 - progress) - 40 * progress;
+      const right_reach = img_w - (img_w * 0.62) * (1.0 - progress) + 40 * progress;
+
+      let html = "";
+      const cw = img_w / COLS;
+      const ch = img_h / ROWS;
+
+      for (let r = 0; r < ROWS; r++) {
+        let line = "";
+        let prevColor = "";
+
+        for (let c = 0; c < COLS; c++) {
+          const px = (c + 0.5) * cw;
+          const py = (r + 0.5) * ch;
+
+          // Determine pixel color and luminance procedurally
+          let color = "#060a12";
+          let lum = 10;
+
+          // 1. Moon Check
+          const distMoon = Math.hypot(px - moon_cx, py - moon_cy);
+          if (distMoon <= moon_r) {
+            // Moon Core
+            color = "#ff003c";
+            lum = 220;
+            // Moon Dark Bands
+            if (Math.abs(py - (moon_cy - moon_r * 0.35)) < 2 || Math.abs(py - (moon_cy + moon_r * 0.15)) < 3) {
+              color = "#800020";
+              lum = 100;
+            }
+          } else if (distMoon <= moon_r + 20) {
+            // Moon Aura Glow
+            const auraFactor = 1.0 - (distMoon - moon_r) / 20.0;
+            color = "#b8004b";
+            lum = Math.floor(140 * auraFactor * (0.4 + 0.6 * progress));
+          }
+
+          // 2. Left Cloud Bank Overlay
+          if (px < left_reach + 30) {
+            if (px < left_reach - 30) {
+              color = "#122238";
+              lum = 60;
+            } else if (px < left_reach) {
+              color = "#1e3a5f";
+              lum = 110;
+            } else {
+              color = "#366496";
+              lum = 160;
+            }
+          }
+
+          // 3. Right Cloud Bank Overlay
+          if (px > right_reach - 30) {
+            if (px > right_reach + 30) {
+              color = "#122238";
+              lum = 60;
+            } else if (px > right_reach) {
+              color = "#1e3a5f";
+              lum = 110;
+            } else {
+              color = "#366496";
+              lum = 160;
+            }
+          }
+
+          // Convert luminance to ASCII char
+          const charIdx = Math.max(0, Math.min(ASCII_CHARS.length - 1, Math.floor((lum / 255) * (ASCII_CHARS.length - 1))));
+          const char = ASCII_CHARS[charIdx];
+
+          if (color !== prevColor) {
+            if (prevColor !== "") line += "</span>";
+            line += `<span style="color:${color}">`;
+            prevColor = color;
+          }
+          line += char === " " ? "&nbsp;" : char;
+        }
+        if (prevColor !== "") line += "</span>";
+        html += line + "\n";
+      }
+
+      asciiStage.innerHTML = html;
+    }
+
+    // Scroll Scrub Logic
+    function updateScrub() {
+      const rect = scrubSection.getBoundingClientRect();
+      const totalScrollable = scrubSection.clientHeight - window.innerHeight;
+      const currentScroll = -rect.top;
+      
+      let progress = currentScroll / totalScrollable;
+      progress = Math.max(0, Math.min(1, progress));
+
+      // Render ASCII frame matching scroll progress
+      renderAsciiScene(progress);
+
+      // Counter tick-up from 0 to BASE_VIEWS
+      let countProgress = Math.max(0, (progress - 0.1) / 0.9);
+      let currentVal = Math.floor(countProgress * BASE_VIEWS);
+      
+      let formattedVal = currentVal.toLocaleString('en-US');
+      while (formattedVal.length < 6) {
+        formattedVal = '0' + formattedVal;
+      }
+      counterDisplay.textContent = formattedVal;
+
+      progressBar.style.width = `${Math.floor(progress * 100)}%`;
+    }
+
+    window.addEventListener('scroll', updateScrub);
+    window.addEventListener('resize', updateScrub);
+    updateScrub();
+
+    replayBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: scrubSection.offsetTop,
+        behavior: 'smooth'
+      });
+    });
+  </script>
+</body>
+</html>

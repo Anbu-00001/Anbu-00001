@@ -77,3 +77,16 @@ I am a developer focused on creating robust backend systems, exploring network p
 <p align="center">
   <i>Let's connect! Find me on <a href="https://www.linkedin.com/in/anbuchelvan-ganesan-549b13326?utm_source=share_via&utm_content=profile&utm_medium=member_android">LinkedIn</a> or reach out via Gmail at anbuchelvannew@gmail.com</i>
 </p>
+
+---
+
+<br>
+<div align="center">
+  <a href="https://anbu-00001.github.io/Anbu-00001/souls_counter_demo.html" title="Click to scroll-scrub the Crimson Moon Reveal!">
+    <img src="./souls_view_counter.svg" alt="Visions Witnessed Counter - Crimson Moon Reveal" width="740" />
+  </a>
+</div>
+<p align="center">
+  <sub><i>✦ VISIONS WITNESSED ✦<br>Handcrafted 10-Frame Dark Fantasy Pixel Art Telemetry • Click badge to open interactive scroll scrubbing</i></sub>
+</p>
+<br>
