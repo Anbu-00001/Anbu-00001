@@ -110,7 +110,7 @@
 
     <rect x="12" y="22" width="171" height="15" fill="#1a080c" stroke="#8a051d" stroke-width="1"/>
 
-    <text class="pixel-count-small" x="21" y="32" fill="#4d000c">000,004</text>
-    <text class="pixel-count-small" x="20" y="31">000,004</text>
+    <text class="pixel-count-small" x="21" y="32" fill="#4d000c">000,010</text>
+    <text class="pixel-count-small" x="20" y="31">000,010</text>
   </g>
 </svg>

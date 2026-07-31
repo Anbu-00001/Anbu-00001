@@ -13,14 +13,30 @@ export default async function handler(req, res) {
   const username = req.query.username || 'Anbu-00001';
 
   try {
-    const counterRes = await fetch(`https://api.visitorbadge.io/api/visitors?path=${username}`);
-    if (counterRes.ok) {
-      const svgText = await counterRes.text();
-      const match = svgText.match(/VISITORS:\s*(\d+)/i);
-      if (match && match[1]) {
-        const val = parseInt(match[1], 10);
+    // 1. Try Komarev API first to extract view count
+    const komarevRes = await fetch(`https://komarev.com/ghpvc/?username=${username}`);
+    if (komarevRes.ok) {
+      const text = await komarevRes.text();
+      const matches = text.match(/<text[^>]*>([\d,]+)<\/text>/gi);
+      if (matches && matches.length > 0) {
+        const lastMatch = matches[matches.length - 1].replace(/<[^>]+>/g, '').replace(/,/g, '');
+        const val = parseInt(lastMatch, 10);
         if (!isNaN(val) && val > 0) {
           globalCount = val;
+        }
+      }
+    }
+    // 2. Fallback to visitorbadge if needed
+    if (globalCount === 4192 || globalCount === 0) {
+      const counterRes = await fetch(`https://api.visitorbadge.io/api/visitors?path=${username}`);
+      if (counterRes.ok) {
+        const svgText = await counterRes.text();
+        const match = svgText.match(/VISITORS:\s*(\d+)/i);
+        if (match && match[1]) {
+          const val = parseInt(match[1], 10);
+          if (!isNaN(val) && val > 0) {
+            globalCount = val;
+          }
         }
       }
     }
