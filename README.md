@@ -64,27 +64,15 @@ I am a developer focused on creating robust backend systems, exploring network p
   </a>
 </p>
 
-<br>
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/248873b1-bed5-47f3-81e8-dc201334b99e" alt="spiral_engulfment">
-</div>
-<br>
-
-
-
 ---
+
+<div align="center">
+  <a href="https://anbu-00001.github.io/Anbu-00001/souls_counter_demo.html" title="Click to scroll-scrub the Crimson Moon Reveal!">
+    <img src="https://souls-view-counter.vercel.app/api/counter" alt="Visions Witnessed - Crimson Moon Reveal" width="100%" />
+  </a>
+  <img src="https://komarev.com/ghpvc/?username=Anbu-00001" width="1" height="1" alt="" />
+</div>
 
 <p align="center">
   <i>Let's connect! Find me on <a href="https://www.linkedin.com/in/anbuchelvan-ganesan-549b13326?utm_source=share_via&utm_content=profile&utm_medium=member_android">LinkedIn</a> or reach out via Gmail at anbuchelvannew@gmail.com</i>
 </p>
-
----
-
-<br>
-<div align="center">
-  <a href="https://anbu-00001.github.io/Anbu-00001/souls_counter_demo.html" title="Click to scroll-scrub the Crimson Moon Reveal!">
-    <img src="https://souls-view-counter.vercel.app/api/counter" alt="Visions Witnessed - Crimson Moon Reveal" width="740" />
-  </a>
-  <img src="https://komarev.com/ghpvc/?username=Anbu-00001" width="1" height="1" alt="" />
-</div>
-<br>
