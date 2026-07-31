@@ -41,10 +41,10 @@ I am a developer focused on creating robust backend systems, exploring network p
 
 ### What I'm Working On
 
-&nbsp;&nbsp;&nbsp;&nbsp; **OpenRescue:** Offline-first emergency coordination system using P2P mesh networking. <br>
-&nbsp;&nbsp;&nbsp;&nbsp; **Sentinel-AIOps:** Production-grade AIOps framework. <br>
-&nbsp;&nbsp;&nbsp;&nbsp; **CivicMesh:** Multi-agent AI navigator that routes people in crisis to housing, food, healthcare and legal aid. <br>
-&nbsp;&nbsp;&nbsp;&nbsp; **Deep-trust:** Multimodal deepfake detection with explainable AI. <br>
+&nbsp;&nbsp;&nbsp;&nbsp; 🏆 **[CivicMesh](https://huggingface.co/spaces/Anbu-00001/CivicMesh):** Multi-agent AI navigator (Jac) connecting people in crisis to aid via Bayesian outcome-learning & Reflexion loops. *(JacHacks Spring '26 Winner — $600 USD)* <br>
+&nbsp;&nbsp;&nbsp;&nbsp; 📊 **[Sentinel-AIOps](https://huggingface.co/spaces/Anbu-00001/Sentinel):** Production-grade MLOps system classifying GitHub Actions CI/CD failures in real time (LightGBM, Macro F1 = 0.90, PSI drift monitoring). <br>
+&nbsp;&nbsp;&nbsp;&nbsp; 🦀 **[Faultline-Engine](https://ripple-deep-demo-67d078.gitlab.io):** Deterministic CI merge gate in Rust & Go prescribing minimal test coverage for code changes. *(Published in GitLab AI Catalog)* <br>
+&nbsp;&nbsp;&nbsp;&nbsp; 🛡️ **[DeepTrust](https://deeptrust-verificationsystem.lovable.app):** Full-stack media verification web app assessing image/video/audio authenticity with attention heatmaps & anomaly timelines. <br>
 
 ---
 
