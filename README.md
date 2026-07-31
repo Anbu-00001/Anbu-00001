@@ -50,7 +50,7 @@ Recent work spans a tamper-evident evidence recorder for Android, a deterministi
 
 &nbsp;&nbsp;&nbsp;&nbsp; **[CivicMesh](https://huggingface.co/spaces/Anbu-00001/CivicMesh):** Multi-agent AI navigator (Jac) connecting people in crisis to aid via Bayesian outcome-learning & Reflexion loops. *(JacHacks Spring '26 Winner — $600 USD)* <br>
 &nbsp;&nbsp;&nbsp;&nbsp; **[Sentinel-AIOps](https://huggingface.co/spaces/Anbu-00001/Sentinel):** Production-grade MLOps system classifying GitHub Actions CI/CD failures in real time (LightGBM, Macro F1 = 0.90, PSI drift monitoring). <br>
-&nbsp;&nbsp;&nbsp;&nbsp; **[Faultline-Engine](https://ripple-deep-demo-67d078.gitlab.io):** Deterministic CI merge gate in Rust & Go prescribing minimal test coverage for code changes. *(Published in GitLab AI Catalog)* <br>
+&nbsp;&nbsp;&nbsp;&nbsp; **[Faultline-Engine](https://gitlab.com/anbuchelvanganesan.cse2024-group/faultline):** Deterministic CI merge gate in Rust & Go prescribing minimal test coverage for code changes. *(Published in GitLab AI Catalog)* <br>
 &nbsp;&nbsp;&nbsp;&nbsp; **[DeepTrust](https://deeptrust-verificationsystem.lovable.app):** Full-stack media verification web app assessing image/video/audio authenticity with attention heatmaps & anomaly timelines. <br>
 
 ---
@@ -73,6 +73,6 @@ Recent work spans a tamper-evident evidence recorder for Android, a deterministi
 
 ---
 
-<p align="center">
-  <i>Let's connect! Find me on <a href="https://www.linkedin.com/in/anbuchelvan-ganesan-549b13326?utm_source=share_via&utm_content=profile&utm_medium=member_android">LinkedIn</a> or reach out via Gmail at anbuchelvannew@gmail.com</i>
-</p>
+<h3 align="center">
+  Let's connect! Find me on <a href="https://www.linkedin.com/in/anbuchelvan-ganesan-549b13326?utm_source=share_via&utm_content=profile&utm_medium=member_android">LinkedIn</a>, check out my <a href="./assets/Anbuchelvan_Ganesan_Resume.pdf">Resume</a>, or reach out via Gmail at anbuchelvannew@gmail.com
+</h3>
