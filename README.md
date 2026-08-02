@@ -17,14 +17,16 @@ Recent work spans a tamper-evident evidence recorder for Android, a deterministi
 
 <p align="left">
   <img src="https://img.shields.io/badge/Linux_Networking-000000?style=for-the-badge&logo=linux&logoColor=white&cache_seconds=1" alt="Linux Networking" />
-  <img src="https://img.shields.io/badge/C%2B%2B-000000?style=for-the-badge&logo=c%2B%2B&logoColor=white&cache_seconds=1" alt="C++" />
-  <img src="https://img.shields.io/badge/C-000000?style=for-the-badge&logo=c&logoColor=white&cache_seconds=1" alt="C" />
   <img src="https://img.shields.io/badge/Python-000000?style=for-the-badge&logo=python&logoColor=white&cache_seconds=1" alt="Python" />
-  <img src="https://img.shields.io/badge/Java-000000?style=for-the-badge&logo=openjdk&logoColor=white&cache_seconds=1" alt="Java" />
-  <img src="https://img.shields.io/badge/Go-000000?style=for-the-badge&logo=go&logoColor=white&cache_seconds=1" alt="Go" />
-  <img src="https://img.shields.io/badge/JavaScript-000000?style=for-the-badge&logo=javascript&logoColor=white&cache_seconds=1" alt="JavaScript" />
   <img src="https://img.shields.io/badge/TypeScript-000000?style=for-the-badge&logo=typescript&logoColor=white&cache_seconds=1" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/JavaScript-000000?style=for-the-badge&logo=javascript&logoColor=white&cache_seconds=1" alt="JavaScript" />
   <img src="https://img.shields.io/badge/Dart-000000?style=for-the-badge&logo=dart&logoColor=white&cache_seconds=1" alt="Dart" />
+  <img src="https://img.shields.io/badge/Go-000000?style=for-the-badge&logo=go&logoColor=white&cache_seconds=1" alt="Go" />
+  <img src="https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white&cache_seconds=1" alt="Rust" />
+  <img src="https://img.shields.io/badge/C%2B%2B-000000?style=for-the-badge&logo=c%2B%2B&logoColor=white&cache_seconds=1" alt="C++" />
+  <img src="https://img.shields.io/badge/Kotlin-000000?style=for-the-badge&logo=kotlin&logoColor=white&cache_seconds=1" alt="Kotlin" />
+  <img src="https://img.shields.io/badge/Jac-000000?style=for-the-badge&logoColor=white&cache_seconds=1" alt="Jac" />
+  <img src="https://img.shields.io/badge/Bash-000000?style=for-the-badge&logo=gnu-bash&logoColor=white&cache_seconds=1" alt="Bash" />
   <img src="https://img.shields.io/badge/Flutter-000000?style=for-the-badge&logo=flutter&logoColor=white&cache_seconds=1" alt="Flutter" />
   <img src="https://img.shields.io/badge/Django-000000?style=for-the-badge&logo=django&logoColor=white&cache_seconds=1" alt="Django" />
   <img src="https://img.shields.io/badge/FastAPI-000000?style=for-the-badge&logo=fastapi&logoColor=white&cache_seconds=1" alt="FastAPI" />
@@ -33,20 +35,16 @@ Recent work spans a tamper-evident evidence recorder for Android, a deterministi
   <img src="https://img.shields.io/badge/Supabase-000000?style=for-the-badge&logo=supabase&logoColor=white&cache_seconds=1" alt="Supabase" />
   <img src="https://img.shields.io/badge/Docker-000000?style=for-the-badge&logo=docker&logoColor=white&cache_seconds=1" alt="Docker" />
   <img src="https://img.shields.io/badge/Cloud-000000?style=for-the-badge&logo=googlecloud&logoColor=white&cache_seconds=1" alt="Cloud" />
-  <img src="https://img.shields.io/badge/Bash-000000?style=for-the-badge&logo=gnu-bash&logoColor=white&cache_seconds=1" alt="Bash" />
   <img src="https://img.shields.io/badge/Git-000000?style=for-the-badge&logo=git&logoColor=white&cache_seconds=1" alt="Git" />
   <img src="https://img.shields.io/badge/GitHub-000000?style=for-the-badge&logo=github&logoColor=white&cache_seconds=1" alt="GitHub" />
   <img src="https://img.shields.io/badge/GitLab-000000?style=for-the-badge&logo=gitlab&logoColor=white&cache_seconds=1" alt="GitLab" />
   <img src="https://img.shields.io/badge/n8n-000000?style=for-the-badge&logo=n8n&logoColor=white&cache_seconds=1" alt="n8n" />
   <img src="https://img.shields.io/badge/Hugging%20Face-000000?style=for-the-badge&logo=huggingface&logoColor=white&cache_seconds=1" alt="Hugging Face" />
-  <img src="https://img.shields.io/badge/Jac-000000?style=for-the-badge&logoColor=white&cache_seconds=1" alt="Jac" />
-  <img src="https://img.shields.io/badge/Kotlin-000000?style=for-the-badge&logo=kotlin&logoColor=white&cache_seconds=1" alt="Kotlin" />
-  <img src="https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white&cache_seconds=1" alt="Rust" />
 </p>
 
 ---
 
-### What I'm Working On
+### What I Have Built and Deployed
 
 &nbsp;&nbsp;&nbsp;&nbsp; **[CivicMesh](https://huggingface.co/spaces/Anbu-00001/CivicMesh):** Multi-agent AI navigator (Jac) connecting people in crisis to aid via Bayesian outcome-learning & Reflexion loops. *(JacHacks Spring '26 Winner — $600 USD)* <br>
 &nbsp;&nbsp;&nbsp;&nbsp; **[Sentinel-AIOps](https://huggingface.co/spaces/Anbu-00001/Sentinel):** Production-grade MLOps system classifying GitHub Actions CI/CD failures in real time (LightGBM, Macro F1 = 0.90, PSI drift monitoring). <br>
