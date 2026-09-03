@@ -9,7 +9,7 @@
 
 I build software that keeps working when the network doesn't — and that can prove it did what it claims.
 
-Recent work spans a tamper-evident evidence recorder for Android, a deterministic CI merge gate, a local-first calibration CLI in Rust, an on-device scam-call shield, and a daemon that turns a spare phone into a Linux touch monitor. Mostly systems, networks, and multi-agent AI held to constraints it can't talk its way around.
+Recent work spans a tamper-evident evidence recorder for Android, a deterministic CI merge gate, a local-first calibration CLI in Rust, an on-device scam-call shield, and a daemon that turns a spare phone into a Linux touch monitor. Mostly systems, networks, and multi-agent AI held to constraints it can't talk its way around
 
 ---
 
