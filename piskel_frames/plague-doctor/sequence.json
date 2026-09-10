@@ -1,0 +1,39 @@
+{
+  "_comment": "Rebuilt 2026-09-11 as SIX frames, all looping. reference.png is the master: the piece is now just the travel, he sleeps throughout, and the whole thing cycles. Fewer frames is higher fidelity here -- 6 frames at 256 colours costs less than 15 at 128, so the export can afford roughly half the colour error.",
+  "canvas": [
+    1774,
+    887
+  ],
+  "master": "reference.png",
+  "frames": 6,
+  "holds": {
+    "f1": 0.5,
+    "f2": 0.5,
+    "f3": 0.5,
+    "f4": 0.5,
+    "f5": 0.5,
+    "f6": 0.5
+  },
+  "generated": "f1 only. f2-f6 are built in post -- a generator cannot close a loop, because the configuration has to repeat exactly and it gives a new arrangement every time.",
+  "motion": {
+    "far_landscape": "STATIC. Castle, beacon, viaduct, river, hills. Distant things do not parallax, so holding them is honest, not a cheat.",
+    "near_treeline": "SCROLLS left, one full tree-spacing over 6 frames. This is what says \"travelling\" -- close things move, far things do not.",
+    "watchers": "a conveyor along the ridge: identical motionless figures, evenly spaced, drifting past with the near ground. One exits as the next enters, so it loops -- and it means there are many of them, all down the road.",
+    "birds": "a wing cycle across the 6 frames plus drift, so they actually fly rather than slide.",
+    "flames": "beacon and lantern gutter on a 2-frame cycle -- a different period from the birds and trees, so the loop reads longer than 6 frames.",
+    "gleam": "crimson interior gleam pulses gently; carving glow breathes."
+  },
+  "readout": {
+    "visible": "ALL six frames. Every frame is now a lit valley, so the sky behind the text is bright throughout -- which is the condition the reference ink was drawn for.",
+    "zone_512x256": [
+      278,
+      27,
+      101,
+      69
+    ],
+    "ink": "reference.png rgb(26,12,27), deepened for a 7px face",
+    "font": "lib/pixelfont7.js, 5x7",
+    "numbers": "stamped at render time -- they change daily"
+  },
+  "regions": "regions.json"
+}

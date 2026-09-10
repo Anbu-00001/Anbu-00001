@@ -59,15 +59,16 @@ Recent work spans a tamper-evident evidence recorder for Android, a deterministi
   <a href="https://github.com/Anbu-00001">
     <img src="https://github-readme-stats-eight-theta.vercel.app/api?username=Anbu-00001&show_icons=true&theme=tokyonight&count_private=true&cache_seconds=1" alt="Anbu's GitHub stats" />
   </a>
-  <a href="https://github.com/Anbu-00001">
-    <img src="https://streak-stats.vercel.app?user=Anbu-00001&theme=tokyonight&count_private=true&cache_seconds=1" alt="GitHub Streak" />
-  </a>
 </p>
 <p align="center">
   <a href="https://github.com/Anbu-00001">
     <img src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=Anbu-00001&layout=compact&theme=tokyonight&langs_count=8" alt="Top Languages" />
   </a>
 </p>
+
+<div align="center">
+  <img src="https://souls-view-counter.vercel.app/api/streak" alt="The Indifferent World - days unbroken and git deeds committed" width="100%" />
+</div>
 
 ---
 

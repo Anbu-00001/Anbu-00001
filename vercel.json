@@ -1,14 +1,36 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
-    { "source": "/", "destination": "/api/counter" },
-    { "source": "/counter.svg", "destination": "/api/counter" }
+    {
+      "source": "/",
+      "destination": "/api/counter"
+    },
+    {
+      "source": "/counter.svg",
+      "destination": "/api/counter"
+    },
+    {
+      "source": "/streak.svg",
+      "destination": "/api/streak"
+    }
   ],
   "headers": [
     {
       "source": "/api/counter",
       "headers": [
-        { "key": "Cache-Control", "value": "max-age=0, no-cache, no-store, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "max-age=0, no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/api/streak",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "max-age=0, no-cache, no-store, must-revalidate"
+        }
       ]
     }
   ]
