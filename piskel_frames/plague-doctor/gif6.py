@@ -40,7 +40,7 @@ bA=labH+inner+numH; bB=labH+lead+labH+inner+numH
 top=int(round(Z['y']*SC)); bT=top+bA+between
 #  Keep these three in step with lib/plague-render.js -- this file exists to show
 #  what ships, so a stale constant here makes the check worthless.
-INK,INK_LABEL,EDGE=(12,5,16),(20,10,24),(253,1,103)   # #0C0510 #140A18 #FD0167
+INK,INK_LABEL,EDGE=(12,5,16),(20,10,24),(238,9,63)   # #0C0510 #140A18 #EE093F
 frames=[]
 for n in range(6):
     im=compose(n)

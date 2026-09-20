@@ -31,7 +31,7 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument('--w', type=int, default=512)
     p.add_argument('--h', type=int, default=256)
-    p.add_argument('--colours', type=int, default=80)
+    p.add_argument('--colours', type=int, default=96)
     p.add_argument('--thresh', type=int, default=6, help='per-pixel delta that counts as changed')
     p.add_argument('--out', default='dist')
     p.add_argument('--grade', dest='grade', action='store_true', default=True,
@@ -39,7 +39,7 @@ def main():
     p.add_argument('--no-grade', dest='grade', action='store_false')
     p.add_argument('--rot', type=float, default=-26.0)
     p.add_argument('--shadow', type=float, default=0.5)
-    p.add_argument('--sky', type=float, default=1.0)
+    p.add_argument('--sky', type=float, default=0.5)
     a = p.parse_args()
     os.makedirs(a.out, exist_ok=True)
 

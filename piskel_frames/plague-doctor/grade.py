@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Cool the plate onto the Crimson Moon's colour axis, and relay the sky's wash.
+Shift the plate onto the Crimson Moon's TEMPERATURE ARC, and calm the sky's wash.
 
 Why this exists
 ---------------
@@ -10,11 +10,32 @@ different red entirely:
     bright reds     moon  h 16.8 deg (crimson/rose)   plates  h 30.1 (scarlet)
     the shadows     moon  visible rose body          plates  near-neutral black
 
-The two share their DARK reds almost exactly -- moon #4E0F27 against plate
-#431529 -- and diverge only as the reds get brighter, where the plate's blue
-channel collapses (B/R 0.61 -> 0.20) and the hue climbs into orange. So the
-correction has to scale with lightness: a flat hue rotation would drag the
-shadows somewhere neither picture goes.
+The lesson that cost a whole revision
+-------------------------------------
+The first version of this file corrected the AVERAGE hue and shipped. It hit the
+target dead on -- 8.7 deg against the moon's 16.8 -- and the result was lifeless,
+because an average is not a palette.
+
+What a picture is actually made of is its arc: how hue travels as lightness
+rises. Shadows sit cool, highlights sit warm, and the span between them is where
+the life is. Both references have a long one; the first correction crushed it:
+
+                     shadow   midtone   highlight    arc     warm chroma
+    moon               327        9         17      +32        39.6%
+    plates, as made    308       17         32      +70        61.0%
+    v1, flat rotation  325        4          9      +44         0.7%   <-- dead
+
+The flat rotation scaled with lightness, so it bit HARDEST at the brightest
+pixels. That is hue shifting run backwards: it cooled the lamp flame, the beak
+highlight and the fire on the keep -- every warm accent in the frame -- and left
+one uniform pink. 62.3% of the picture's warm chroma went to 0.7%.
+
+So the correction is a HUMP over the midtones, not a ramp. The ambient mass that
+actually read as too warm gets the full shift; the two ends are left alone, and
+the light sources are held back explicitly (see `ember`). Resonating with the
+moon means sharing its arc, not landing on its mean -- and since the moon's
+highlights only reach 17 deg, matching it exactly at the top would drain a scene
+that contains real fire.
 
 Everything here runs on the full 1774x887 plate, BEFORE export.py's downsample,
 so the grade is decided at full detail and the resampler only ever sees finished
@@ -54,25 +75,71 @@ def ss(x, e0, e1):
 
 # ---------------------------------------------------------------------- grading
 
-def cool(rgb, rot=-26.0, shadow=0.5):
-    """Rotate the bright reds off scarlet toward the moon's crimson, and give the
-    darks a violet body.
+def temp_arc(L, shadow=-6.0, mid=-26.0, high=4.0):
+    """Hue offset as a function of lightness -- a HUMP over the midtones, not a ramp.
 
-    rot     degrees of hue rotation at full strength. -17.5 lands on the moon
-            exactly (h 16.5 against its 16.8); -26 carries past it into rose,
-            which is what reads as 'cooler' rather than merely 'corrected'.
+    This is the whole correction, and the first version of this file got it
+    backwards. It scaled the rotation by smoothstep(L, 15, 50), i.e. hardest at
+    the brightest pixels, which is hue shifting run in reverse. Measured cost:
+    the warm share of the picture's chroma went from 62.3% to 0.7%. The lamp
+    flame, the beak highlight and the fire on the castle all live in hue 20-40,
+    and every one of them was rotated out of existence.
+
+    Both reference pictures obey the standard rule -- shadows cool, highlights
+    warm -- and their hue climbs monotonically with lightness:
+
+        L* band       moon    plague as generated
+        deep shadow   327     308
+        midtone         9      16
+        highlight      17      31 .. 42
+        total arc     +50     +94 degrees
+
+    That arc IS the life in the picture. So the bulk of the sky, which is what
+    actually read as too warm, gets the full correction, while the two ends are
+    left to do their jobs: the shadows stay cool and the fire stays fire.
+
+    Note the moon's own highlights only reach 17 deg, so matching it exactly at
+    the top would drain a scene that contains real flame. Resonance is a shared
+    arc, not a shared average.
+    """
+    w_lo = 1.0 - ss(L, 6., 20.)                         # deep shadow
+    w_mid = ss(L, 10., 26.) * (1.0 - ss(L, 34., 52.))   # the ambient mass
+    w_hi = ss(L, 46., 66.)                              # flame, embers, highlight
+    tot = w_lo + w_mid + w_hi + 1e-6
+    return (shadow * w_lo + mid * w_mid + high * w_hi) / tot
+
+
+def cool(rgb, rot=-26.0, shadow=0.5, ember=1.0):
+    """Shift the picture onto the moon's temperature arc and give the darks a
+    violet body.
+
+    rot     the midtone correction in degrees -- the depth of the hump. The two
+            ends scale with it, so this stays the single temperature knob.
     shadow  how much blue-violet enters the deep darks, 0..1.
+    ember   how firmly the hottest, most saturated pixels are held back from the
+            correction, 0..1. These are the light SOURCES -- lamp flame, the fire
+            on the keep -- and a light source keeps its own colour no matter what
+            the ambient does. Without this the lamp cools with the sky and the
+            picture loses the one warm thing in it.
 
-    The rotation is gated three ways -- on hue (reds only), on chroma (leave the
-    near-greys, which carry no hue to rotate) and on lightness (leave the
-    shadows, which already match). Rotating everything turns the lamp green.
+    Gated on hue (reds only) and chroma (near-greys have no hue to rotate), but
+    NOT on lightness any more -- the arc is the lightness term now.
     """
     L, C, H = to_lch(rgb)
     Hs = np.where(H > 180, H - 360, H)                  # unwrap around 0 deg
-    amt = (ss(-np.abs(Hs), -50., -30.)                  # red family
-           * ss(C, 10., 22.)                            # has real chroma
-           * ss(L, 15., 50.))                           # and is bright
-    out = from_lch(L, C, (H + rot * amt) % 360)
+    gate = ss(-np.abs(Hs), -50., -30.) * ss(C, 10., 22.)
+
+    scale = rot / -26.0                                 # one knob drives the arc
+    off = temp_arc(L, shadow=-6.0 * scale, mid=rot, high=4.0 * scale)
+
+    #  Protect the light sources: bright AND saturated together means emitter,
+    #  not lit surface. Either alone is ordinary -- the sky is saturated, the
+    #  beak highlight is bright -- so this has to be the product, not a sum.
+    if ember > 0:
+        keep = ss(L, 44., 62.) * ss(C, 55., 80.) * ember
+        gate = gate * (1.0 - keep)
+
+    out = from_lch(L, C, (H + off * gate) % 360)
 
     if shadow > 0:
         L2, C2, H2 = to_lch(out)
@@ -98,8 +165,13 @@ def sky_mask(rgb, blur=None):
     return cv2.GaussianBlur(m, (0, 0), blur if blur else max(3.0, w / 85.))[..., None]
 
 
-def regrade(rgb, strength=1.0):
-    """Replace the sky's blotchy low frequency with one clean vertical ramp.
+def regrade(rgb, strength=0.5):
+    """Blend the sky's blotchy low frequency toward one clean vertical ramp.
+
+    At strength 1.0 this replaced the wash outright, and that went too far: the
+    bright patch over the valley is not just blotchiness, it is the fire's glow,
+    and flattening it removed a thing the picture was saying. Half strength
+    keeps the glow while still pulling the worst of the mottling out.
 
     The generator left a hot patch in the upper left that no real sky has and the
     moon's own disc certainly doesn't. Split the sky into low frequency (the
@@ -126,7 +198,7 @@ def regrade(rgb, strength=1.0):
     return np.clip(lo * (1 - m * strength) + ramp * (m * strength) + hi, 0, 255)
 
 
-def grade(rgb, rot=-26.0, shadow=0.5, sky=1.0):
+def grade(rgb, rot=-26.0, shadow=0.5, sky=0.5):
     """The whole pass, in the order the corrections depend on each other: cool
     first, then relay the sky -- the ramp must be fitted to the colours that will
     actually ship, not to the ones the grade is about to replace."""
@@ -157,7 +229,7 @@ if __name__ == '__main__':
     p.add_argument('dst')
     p.add_argument('--rot', type=float, default=-26.0)
     p.add_argument('--shadow', type=float, default=0.5)
-    p.add_argument('--sky', type=float, default=1.0)
+    p.add_argument('--sky', type=float, default=0.5)
     a = p.parse_args()
     src = np.array(Image.open(a.src).convert('RGB')).astype(np.float32)
     out = grade(src, a.rot, a.shadow, a.sky)
