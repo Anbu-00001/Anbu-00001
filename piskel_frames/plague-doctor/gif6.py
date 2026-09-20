@@ -38,15 +38,21 @@ labH,numH=7*lab,7*num
 inner,lead,between=int(round(2*SC)),max(1,int(round(1*SC))),int(round(4*SC))
 bA=labH+inner+numH; bB=labH+lead+labH+inner+numH
 top=int(round(Z['y']*SC)); bT=top+bA+between
-INK,INK_LABEL=(12,5,16),(30,16,42)
+#  Keep these three in step with lib/plague-render.js -- this file exists to show
+#  what ships, so a stale constant here makes the check worthless.
+INK,INK_LABEL,EDGE=(12,5,16),(20,10,24),(253,1,103)   # #0C0510 #140A18 #FD0167
 frames=[]
 for n in range(6):
     im=compose(n)
-    stamp(im,'DAYS UNBROKEN',CX,top,lab,INK_LABEL)
-    stamp(im,'195',CX,top+labH+inner,num,INK)
-    stamp(im,'GIT DEEDS',CX,bT,lab,INK_LABEL)
-    stamp(im,'COMMITTED',CX,bT+labH+lead,lab,INK_LABEL)
-    stamp(im,'1,158',CX,bT+labH+lead+labH+inner,num,INK)
+    LINES=[('DAYS UNBROKEN',top,lab,INK_LABEL),('197',top+labH+inner,num,INK),
+           ('GIT DEEDS',bT,lab,INK_LABEL),('COMMITTED',bT+labH+lead,lab,INK_LABEL),
+           ('1,163',bT+labH+lead+labH+inner,num,INK)]
+    for t_,y_,c_,f_ in LINES:
+        o=max(1,round(c_/2))
+        for dx in (-o,0,o):
+            for dy in (-o,0,o):
+                if dx or dy: stamp(im,t_,CX+dx,y_+dy,c_,EDGE)
+    for t_,y_,c_,f_ in LINES: stamp(im,t_,CX,y_,c_,f_)
     frames.append(im)
 import imagequant
 pal=imagequant.quantize_pil_image(frames[2],dithering_level=0.0,max_colors=256,min_quality=0,max_quality=100)
