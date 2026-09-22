@@ -73,5 +73,5 @@ Recent work spans a tamper-evident evidence recorder for Android, a deterministi
 ---
 
 <h3 align="center">
-  Let's connect! Find me on <a href="https://www.linkedin.com/in/anbuchelvan-ganesan-549b13326?utm_source=share_via&utm_content=profile&utm_medium=member_android">LinkedIn</a>, check out my <a href="./assets/Anbuchelvan_Ganesan_Resume.pdf">Resume</a>, or reach out via Gmail at anbuchelvannew@gmail.com
+  Let's connect! Find me on <a href="https://www.linkedin.com/in/anbuchelvan-ganesan">LinkedIn</a>, check out my <a href="./assets/Anbuchelvan_Ganesan_Resume.pdf">Resume</a>, or reach out via Gmail at anbuchelvannew@gmail.com
 </h3>
