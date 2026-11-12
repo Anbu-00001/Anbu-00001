@@ -47,7 +47,7 @@ Recent work spans a tamper-evident evidence recorder for Android, a deterministi
 ### What I Have Built and Deployed
 
 &nbsp;&nbsp;&nbsp;&nbsp; **[CivicMesh](https://huggingface.co/spaces/Anbu-00001/CivicMesh):** Multi-agent AI navigator (Jac) connecting people in crisis to aid via Bayesian outcome-learning & Reflexion loops. *(JacHacks Spring '26 Winner — $600 USD)* <br>
-&nbsp;&nbsp;&nbsp;&nbsp; **[Sentinel-AIOps](https://huggingface.co/spaces/Anbu-00001/Sentinel):** Production-grade MLOps system classifying GitHub Actions CI/CD failures in real time (LightGBM, Macro F1 = 0.90, PSI drift monitoring). <br>
+&nbsp;&nbsp;&nbsp;&nbsp; **[NetForensiq](https://github.com/Anbu-00001/NetForensiq):** Air-gapped network & Android forensics platform for cybercrime labs: PCAP analysis with a measured false-alarm rate on every finding, hash-chained chain of custody, BSA §63 certificates & offline-verifiable signed case packages. *(2nd Place — KANAD S.H.I.E.L.D. 2026, Ahmedabad Cyber Crime Branch × i-Hub Gujarat)* <br>
 &nbsp;&nbsp;&nbsp;&nbsp; **[Faultline-Engine](https://gitlab.com/anbuchelvanganesan.cse2024-group/faultline):** Deterministic CI merge gate in Rust & Go prescribing minimal test coverage for code changes. *(Published in GitLab AI Catalog)* <br>
 &nbsp;&nbsp;&nbsp;&nbsp; **[DeepTrust](https://deeptrust-verificationsystem.lovable.app):** Full-stack media verification web app assessing image/video/audio authenticity with attention heatmaps & anomaly timelines. <br>
 
