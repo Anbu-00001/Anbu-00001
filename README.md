@@ -57,12 +57,12 @@ Recent work spans a tamper-evident evidence recorder for Android, a deterministi
 
 <p align="center">
   <a href="https://github.com/Anbu-00001">
-    <img src="https://github-readme-stats-eight-theta.vercel.app/api?username=Anbu-00001&show_icons=true&theme=tokyonight&count_private=true&cache_seconds=1" alt="Anbu's GitHub stats" />
+    <img src="https://github-readme-stats-one-bice.vercel.app/api?username=Anbu-00001&show_icons=true&theme=tokyonight&count_private=true&cache_seconds=1" alt="Anbu's GitHub stats" />
   </a>
 </p>
 <p align="center">
   <a href="https://github.com/Anbu-00001">
-    <img src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=Anbu-00001&layout=compact&theme=tokyonight&langs_count=8" alt="Top Languages" />
+    <img src="https://github-readme-stats-one-bice.vercel.app/api/top-langs/?username=Anbu-00001&layout=compact&theme=tokyonight&langs_count=8" alt="Top Languages" />
   </a>
 </p>
 
