@@ -2,7 +2,7 @@
 
 <div align="center">
   <a href="https://anbu-00001.github.io/Anbu-00001/souls_counter_demo.html" title="Click to scroll-scrub the Crimson Moon Reveal!">
-    <img src="https://souls-view-counter.vercel.app/api/counter" alt="Beheld by Wanderers - Crimson Moon Reveal" width="100%" />
+    <img src="https://anbu-souls-counter.vercel.app/api/counter" alt="Beheld by Wanderers - Crimson Moon Reveal" width="100%" />
   </a>
   <img src="https://komarev.com/ghpvc/?username=Anbu-00001" width="1" height="1" alt="" />
 </div>
@@ -67,7 +67,7 @@ Recent work spans a tamper-evident evidence recorder for Android, a deterministi
 </p>
 
 <div align="center">
-  <img src="https://souls-view-counter.vercel.app/api/streak" alt="The Indifferent World - days unbroken and git deeds committed" width="100%" />
+  <img src="https://anbu-souls-counter.vercel.app/api/streak" alt="The Indifferent World - days unbroken and git deeds committed" width="100%" />
 </div>
 
 ---
